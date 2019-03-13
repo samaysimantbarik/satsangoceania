@@ -1,0 +1,78 @@
+doctype html
+html(lang='en')
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    link#bootstrap-css(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', rel='stylesheet')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
+    script(src='http://code.jquery.com/jquery-3.3.1.min.js', integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=", crossorigin='anonymous')
+    link(rel='stylesheet', src='css/style.css')
+    script(src='js/countrypicker.js')
+  body.container.mt-4
+    // MDB Forms
+    .container.mt-4
+      // Grid row
+      .row
+        // Grid column
+        .col-md-6.mb-4
+          form(action='/api/signin/', method='POST')
+            .card
+              .card-body
+                h3.text-center.default-text.py-3
+                  i.fa.fa-lock
+                  |  Login:
+                // Body
+                .md-form
+                  i.fa.fa-envelope.prefix.grey-text
+                  input#defaultForm-email.form-control(type='text', name='username')
+                  label(for='defaultForm-email') Your email
+                .md-form
+                  i.fa.fa-lock.prefix.grey-text
+                  input#defaultForm-pass.form-control(type='password', name='pwd')
+                  label(for='defaultForm-pass') Your password
+                .text-center
+                  button.btn.btn-default.waves-effect.waves-light(type='submit') SIGN IN
+        .col-md-6.mb-4
+          .card
+            .card-body
+              // Form register
+              form(action='/api/registeruser/', method='POST')
+                h2.text-center.font-up.font-bold.deep-orange-text.py-4 Sign up
+                .md-form
+                  label(for='orangeForm-name3') Name
+                  i.fa.fa-user.prefix.grey-text
+                  input#orangeForm-name3.form-control(type='text', name='name')
+                .md-form
+                  br
+                  label(for='orangeForm-name3') Country of Birth
+                  select.form-control.selectpicker.countrypicker(name='birthcountry', data-default='India')
+                .md-form
+                  br
+                  label(for='orangeForm-name3') Country of Residency
+                  select.form-control.selectpicker.countrypicker(name='residencycountry', data-default='Australia')
+                .md-form
+                  br
+                  label(for='orangeForm-email3') Email
+                  i.fa.fa-envelope.prefix.grey-text
+                  input#orangeForm-email3.form-control(type='email', name='email')
+                .md-form
+                  br
+                  label(for='orangeForm-email3') Date Of Birth
+                  i.fa.fa-envelope.prefix.grey-text
+                  input#orangeForm-email3.form-control(type='date', placeholder='Date of Birth', name='dob')
+                .md-form
+                  br
+                  label(for='orangeForm-pass3') Password
+                  i.fa.fa-lock.prefix.grey-text
+                  input#orangeForm-pass3.form-control(type='password', name='password')
+                .md-form
+                  br
+                  label(for='orangeForm-pass3') Retype Password
+                  i.fa.fa-lock.prefix.grey-text
+                  input#orangeForm-pass3.form-control(type='password', name='repassword')
+                .text-center
+                  button.btn.btn-deep-orange(type='submit')
+                    b REGISTER
+                    i.fa.fa-angle-double-right.pl-2(aria-hidden='true')
+              // Form register
+              // MDB core JavaScript
+              script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js')

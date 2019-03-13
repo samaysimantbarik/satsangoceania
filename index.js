@@ -1,21 +1,22 @@
 const express = require("express");
 var path = require('path');
-var session = require('express-session');
-const mongoose = require('mongoose');
+
 
 
 const app = express();
 var cons = require('consolidate');
+const login = require("./services/home");
 
-app.use(session({secret: 'ssshhhhh'}));
+
 
 // view engine setup
 app.engine('html', cons.swig)
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
+app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, "assets")));
 //app.use(express.static(path.join(__dirname, "views")));
 app.use(express.urlencoded())
+app.use("/",login);
 
 //app.use('/stylesheets', express.static(__dirname , "/assets"));
 console.log(__dirname);
@@ -34,18 +35,8 @@ const users = [
         "name": "robert"
     }]
 
-app.get("/", function (req, res) {
-    res.sendfile("views/login.html");
-})
 
-app.post("/api/signin/",function(req,res){
 
-    sess=req.session;
-    console.log("Session is : "+sess.username);
-    var username= req.body.username;
-    
-    res.render(__dirname+"/views/userspage.html" ,{"name":username});
-})
 
 app.get("/api/users/:id", function (req, res) {
 
@@ -96,14 +87,12 @@ async function getCurrentFamilyCodeValue(){
     //console.log(values);
    }
 
-app.post("/api/registeruser/", function(req, res){
-    console.log(req.body.birthcountry);
-    const uri = "mongodb+srv://satsang:Samta@2505@cluster0-bdugo.mongodb.net/satsang?retryWrites=true";
-    mongoose.connect(uri, { useNewUrlParser: true }).then(()=> console.log("Connected")).catch(err => console.error("Could not connect"));
-    getCurrentFamilyCodeValue();
-    //createDevotee(req);
-    res.sendFile(__dirname+"/views/register.html");
-});
+
+
+app.get("/api/test/", function(req,res){
+
+    res.render('index2');
+})
 
 app.get("/api/users/", function (req, res) {
 
