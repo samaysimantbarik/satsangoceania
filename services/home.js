@@ -2,10 +2,13 @@
 const express = require('express');
 const router = express.Router();
 const connection = require('../dbconnection/connection');
-
+const path = require('path');
+router.use(express.static(path.join(global.__basedir, 'public')));
+var session = require('express-session');
 
 
 router.get("/", function (req, res) {
+    session=req.session;
     res.render('login');
 
 
@@ -53,12 +56,47 @@ router.post("/api/signin/", function (req, res) {
 
 
 router.post("/api/registeruser/", function (req, res) {
-    console.log(req.body.birthcountry);
-    const uri = "mongodb+srv://satsang:Samta@2505@cluster0-bdugo.mongodb.net/satsang?retryWrites=true";
-    mongoose.connect(uri, { useNewUrlParser: true }).then(() => console.log("Connected")).catch(err => console.error("Could not connect"));
-    getCurrentFamilyCodeValue();
-    //createDevotee(req);
-    res.sendFile(__dirname + "/views/register.html");
+
+    var name= req.body.name;
+    var birthcountry = req.body.birthcountry;
+    var residencycountry = req.body.residencycountry;
+    var email= req.body.email;
+    var dob= req.body.dob;
+    var password= req.body.password;
+
+    var query= `INSERT INTO FCMASTER (HEADPERSON_NAME, HEADPERSON_DOB, NUM_OF_MEMBERS, EMAIL, PASSWORD) VALUES ('${name}', '${dob}', 1, '${email}', '${password}')`;
+
+   
+  // console.log(query);
+    connection.query(query, function (err, result, fields) {
+        if(err){
+            console.log(err);
+            res.render('login', { errorRegister: err });
+        }
+        else{
+            //console.log(result);
+            var username= name;
+            var FC_CODE=result.insertId;
+            console.log(username+","+FC_CODE);
+            var query2=`INSERT INTO DEVOTEEMASTER  VALUES (${FC_CODE},'${name}','${dob}', '${birthcountry}', '${residencycountry}','passport', '${email}', '8')`;
+            //console.log(query2);
+            connection.query(query2, function (err2, result2, fields2) {
+                if(err2){
+                    console.log(err2);
+                    res.render('login', { errorRegister: err2 });
+                }
+                else{
+               //     console.log(result2);
+                 //   console.log(username+","+FC_CODE);
+                    session.FC_CODE=FC_CODE;
+                    res.render('userspage', { username: username ,  fcnum:FC_CODE  });
+                }});
+           
+        }
+    });
+
+
+    //res.sendFile(__dirname + "/views/register.html");
 });
 
 module.exports = router;
