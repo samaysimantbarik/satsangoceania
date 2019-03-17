@@ -1,80 +1,120 @@
-doctype html
-html(lang='en')
-  head
-    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    link#bootstrap-css(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', rel='stylesheet')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
-    script(src='http://code.jquery.com/jquery-3.3.1.min.js', integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=", crossorigin='anonymous')
-    link(rel='stylesheet', src='css/style.css')
-    script(src='js/countrypicker.js')
-  body.container.mt-4
-    // MDB Forms
-    .container.mt-4
-      // Grid row
-      .row
-        // Grid column
-        .col-md-6.mb-4
-          form(action='/api/signin/', method='POST')
-            .card
-              .card-body
-                h3.text-center.default-text.py-3
-                  i.fa.fa-lock
-                  |  Login:
-                // Body
-                .md-form
-                  i.fa.fa-envelope.prefix.grey-text
-                  input#defaultForm-email.form-control(type='text', name='username')
-                  label(for='defaultForm-email') Your email
-                .md-form
-                  i.fa.fa-lock.prefix.grey-text
-                  input#defaultForm-pass.form-control(type='password', name='pwd')
-                  label(for='defaultForm-pass') Your password
-                .text-center
-                  button.btn.btn-default.waves-effect.waves-light(type='submit') SIGN IN
-                error= error
-        .col-md-6.mb-4
-          .card
-            .card-body
-              // Form register
-              form(action='/api/registeruser/', method='POST')
-                h2.text-center.font-up.font-bold.deep-orange-text.py-4 Sign up
-                .md-form
-                  label(for='orangeForm-name3') Name
-                  i.fa.fa-user.prefix.grey-text
-                  input#orangeForm-name3.form-control(type='text', name='name')
-                .md-form
-                  br
-                  label(for='orangeForm-name3') Country of Birth
-                  select.form-control.selectpicker.countrypicker(name='birthcountry', data-default='India')
-                .md-form
-                  br
-                  label(for='orangeForm-name3') Country of Residency
-                  select.form-control.selectpicker.countrypicker(name='residencycountry', data-default='Australia')
-                .md-form
-                  br
-                  label(for='orangeForm-email3') Email
-                  i.fa.fa-envelope.prefix.grey-text
-                  input#orangeForm-email3.form-control(type='email', name='email')
-                .md-form
-                  br
-                  label(for='orangeForm-email3') Date Of Birth
-                  i.fa.fa-envelope.prefix.grey-text
-                  input#orangeForm-email3.form-control(type='date', placeholder='Date of Birth', name='dob')
-                .md-form
-                  br
-                  label(for='orangeForm-pass3') Password
-                  i.fa.fa-lock.prefix.grey-text
-                  input#orangeForm-pass3.form-control(type='password', name='password')
-                .md-form
-                  br
-                  label(for='orangeForm-pass3') Retype Password
-                  i.fa.fa-lock.prefix.grey-text
-                  input#orangeForm-pass3.form-control(type='password', name='repassword')
-                .text-center
-                  button.btn.btn-deep-orange(type='submit')
-                    b REGISTER
-                    i.fa.fa-angle-double-right.pl-2(aria-hidden='true')
-                    error= errorRegister
-              // Form register
-              // MDB core JavaScript
-              script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js')
+head
+  meta(charset='utf-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  title Satsang Oceana
+  link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css')
+  link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700')
+  script(src='http://code.jquery.com/jquery-3.3.1.min.js', integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=", crossorigin='anonymous')
+  link(rel='stylesheet', href='css/styles.min.css')
+  link(rel='stylesheet', src='css/style.css')
+  script(src='js/countrypicker.js')
+div
+div(style='height:100%;width:100%;')
+  .header-blue(style='width:100%;height:100%;')
+    nav.navbar.navbar-dark.navbar-expand-md.navigation-clean-search
+      .container
+        a.navbar-brand(href='#', style='font-size:40px;width:100%;') Satsang Oceania
+        .container
+          a.navbar-brand(href='#', style='font-size:40px;width:100%;')
+          div
+            a.navbar-brand(href='#', style='font-size:40px;width:100%;')
+              // Signin & Signup
+            a.btn.btn-primary(href='#', data-toggle='modal', data-target='.login-register-form')
+              | Login - Registration Modal
+            // Login / Register Modal
+            .modal.fade.login-register-form(role='dialog', aria-hidden='true', style='display: none;')
+              .modal-dialog.modal-sm
+                .modal-content
+                  .modal-header
+                    button.close(type='button', data-dismiss='modal')
+                      span.glyphicon.glyphicon-remove
+                    ul.nav.nav-tabs(style='width:100%')
+                      li.active(style='padding-right:15%')
+                        a(data-toggle='tab', href='#login-form')
+                          | Login    
+                          |
+                          span.glyphicon.glyphicon-user
+                      li(style='padding-right:1')
+                        a.active.show(data-toggle='tab', href='#registration-form')(style='margin-left:100px')
+                          |    
+                          | Register
+                          span.glyphicon.glyphicon-pencil
+                  .modal-body
+                    .tab-content
+                      #login-form.tab-pane.fade.in
+                        form(action='/api/signin/', method='POST')
+                          .form-group
+                            label(for='email') Email:
+                            input#email.form-control(type='email', placeholder='Enter email', name='username')
+                          .form-group
+                            label(for='pwd') Password:
+                            input#pwd.form-control(type='password', placeholder='Enter password', name='pwd')
+                          .checkbox
+                            label
+                              input(type='checkbox', name='remember')
+                              |  Remember me
+                          button.btn.btn-default(type='submit') Login
+                      #registration-form.tab-pane.fade.active.show
+                        form(action='/api/registeruser/', method='POST')
+                            .form-wrapper
+                              br
+                              label(for='orangeForm-name3',style='color:blue;') Family Member Name
+                              input.form-control(type='text' ,name='name')
+                              i.zmdi.zmdi-account
+                            .form-wrapper
+                              br
+                              label(for='orangeForm-name3',style='color:blue;') Email Address
+                              input.form-control(type='text')
+                              i.zmdi.zmdi-email
+                            .form-wrapper
+                              br
+                              label(for='orangeForm-name3',style='color:blue;') Country of Birth
+                              select.form-control.selectpicker.countrypicker(placeholder='Country of Origin' ,name='birthcountry', data-default='India')
+                              i.zmdi.zmdi-email
+                            .form-wrapper
+                              br
+                              label(for='orangeForm-name3',style='color:blue;') Country of Residency
+                              select.form-control.selectpicker.countrypicker(placeholder='Country of Residency' ,name='residencycountry', data-default='Australia')
+                              i.zmdi.zmdi-email
+                            .form-wrapper
+                              br
+                              label(for='orangeForm-name3',style='color:blue;') Date Of Birth
+                              input#orangeForm-email3.form-control(type='date', placeholder='Date of Birth', name='dob')
+                            .form-wrapper
+                              br
+                              label(for='orangeForm-name3',style='color:blue;') Gender
+                              select.form-control(name='', id='')
+                                option(value='', disabled='', selected='') Gender
+                                option(value='male') Male
+                                option(value='femal') Female
+                                option(value='other') Other
+                              i.zmdi.zmdi-caret-down(style='font-size: 17px')
+                            .form-wrapper
+                              br
+                              label(for='orangeForm-name3',style='color:blue;') Enter Password
+                              input.form-control(type='password', placeholder='Password')
+                              i.zmdi.zmdi-lock
+                            .form-wrapper
+                              br
+                              label(for='orangeForm-name3',style='color:blue;') Confirm Password
+                              input.form-control(type='password', placeholder='Confirm Password')
+                              i.zmdi.zmdi-lock
+                              br
+                            button(style='margin-left: 30%;')
+                              |Register
+                              i.zmdi.zmdi-arrow-right
+            button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1', style='')
+              span.sr-only Toggle navigation
+              span.navbar-toggler-icon
+            #navcol-1.collapse.navbar-collapse
+              ul.nav.navbar-nav
+    .container.flex-wrap.hero(style='padding-bottom:50%;margin-bottom:0;width:80%;margin-top:0;height:100%;padding-left:0px;')
+      .row(style='height:100%;width:100%;')
+        .col-12.col-lg-6.col-xl-5.offset-xl-1(style='height:100px;width:100%;')
+          img.device(src='images/thakurcoverpic.jpg', style='height:300%;width:200%;padding-left:200px;')
+          h1.visible(style='margin-top:10px;margin-bottom:0px;margin-left:100px;height:100px;width:800px;background-color:#efe9f2;padding-left:200px;padding-top:5%;color:rgb(16,15,15);') &nbsp; &nbsp; &nbsp; &nbsp;ISTAVRITY PORTAL
+        .col
+          div(style='padding-left:80%;')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js')
