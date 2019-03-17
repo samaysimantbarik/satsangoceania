@@ -1,20 +1,38 @@
 const express = require("express");
 var path = require('path');
 var session = require('express-session');
-
-
-global.__basedir = __dirname;
+var RedisStore = require('connect-redis')(session);
 const app = express();
 var cons = require('consolidate');
+var redis = require('redis');
+var client = redis.createClient();
+
+var store = new RedisStore({host: 'localhost', port: 6379, client: client, ttl: 260});
+global.__basedir = __dirname;
+
 app.use(session({
     resave: true,
     saveUninitialized: true,
-    secret: "secret"
-   // store: store
+    secret: "secret",
+    store: store
 }));
+
+app.use(function(req,res,next){
+   console.log("Middleware:"+req.session);
+
+if(req.session) {
+    
+    app.render('login');
+}
+else{
+    next();
+}
+
+})
 
 const login = require("./services/home");
 const users = require("./services/users");
+
 
 
 

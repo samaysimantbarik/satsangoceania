@@ -1,93 +1,61 @@
-head
-  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
-  script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
-  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
-  script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
-  script(src='js/countrypicker.js')
-  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
-  link(rel='stylesheet', type='text/css', href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
-  script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
-  script.
-    $(document).ready(function() {
-    var t = $('#restable').DataTable();
-    //$("#btn1").click(function(){
-    $.ajax({
-    type: "GET",
-    url: "/api/members/",
-          }).done(function(data){
-    //  console.log("Response is:"+data.id+"-"+data.name);
-    $.each(data, function(item, obj) {
-    console.log("Response is:"+obj.FC_CODE+"-"+obj.MEMBER_NAME);
-    t.row.add(
-    [ obj.FC_CODE,
-    obj.MEMBER_NAME,
-    obj.MEMBER_DOB,
-    obj.BIRTH_COUNTRY,
-    obj.RESIDENCY_COUNTRY,
-    obj.PASSPORT_NUMBER,
-    obj.EMAIL,
-    obj.PHONENUMBER
-    ]).draw(false);
-    
-    //});
-    })
-    })
-    });
-span Hello  
-user= username
- 
-p -------------
-FCCODE= fcnum
+extends header
 
-br
-button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModalLong')
-  | Launch demo modal
-// Modal
-#exampleModalLong.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLongTitle', aria-hidden='true')
-  .modal-dialog(role='document')
-    .modal-content
-      .modal-header
-        h5#exampleModalLongTitle.modal-title Members
-        button.close(type='button', data-dismiss='modal', aria-label='Close')
-          span(aria-hidden='true') &times;
-      .modal-body
-        form(action='/api/members/', method='POST')
-          .md-form
-            label(for='orangeForm-name3') Name
-            i.fa.fa-user.prefix.grey-text
-            input#orangeForm-name3.form-control(type='text', name='name')
-          .md-form
-            br
-            label(for='orangeForm-name3') Country of Birth
-            select.form-control.selectpicker.countrypicker(name='birthcountry', data-default='India')
-          .md-form
-            br
-            label(for='orangeForm-name3') Country of Residency
-            select.form-control.selectpicker.countrypicker(name='residencycountry', data-default='Australia')
-          .md-form
-            br
-            label(for='orangeForm-email3') Email
-            i.fa.fa-envelope.prefix.grey-text
-            input#orangeForm-email3.form-control(type='email', name='email')
-          .md-form
-            br
-            label(for='orangeForm-email3') Date Of Birth
-            i.fa.fa-envelope.prefix.grey-text
-            input#orangeForm-email3.form-control(type='date', placeholder='Date of Birth', name='dob')
-          .md-form
-            br
-            button#addmember.btn.btn-primary(type='submit') Save changes
-      .modal-footer
-        button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-button#btn1(type='button')  POPULATE EXISTING 
-table#restable
-      thead
-        tr
-          th FC_CODE
-          th NAME
-          th Date-Of-Birth
-          th Country-Of-Birth
-          th Country-of-Residence
-          th Passport#
-          th Email
-          th Phone Number
+block content
+  span Hello  
+  user= username
+ 
+  p -------------
+  FCCODE= fcnum
+
+  br
+  button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModalLong')
+    | Launch demo modal
+  // Modal
+  #exampleModalLong.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLongTitle', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLongTitle.modal-title Members
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          form(action='/api/members/', method='POST')
+            .md-form
+              label(for='orangeForm-name3') Name
+              i.fa.fa-user.prefix.grey-text
+              input#orangeForm-name3.form-control(type='text', name='name')
+            .md-form
+              br
+              label(for='orangeForm-name3') Country of Birth
+              select.form-control.selectpicker.countrypicker(name='birthcountry', data-default='India')
+            .md-form
+              br
+              label(for='orangeForm-name3') Country of Residency
+              select.form-control.selectpicker.countrypicker(name='residencycountry', data-default='Australia')
+            .md-form
+              br
+              label(for='orangeForm-email3') Email
+              i.fa.fa-envelope.prefix.grey-text
+              input#orangeForm-email3.form-control(type='email', name='email')
+            .md-form
+              br
+              label(for='orangeForm-email3') Date Of Birth
+              i.fa.fa-envelope.prefix.grey-text
+              input#orangeForm-email3.form-control(type='date', placeholder='Date of Birth', name='dob')
+            .md-form
+              br
+              button#addmember.btn.btn-primary(type='submit') Save changes
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+  button#btn1(type='button')  POPULATE EXISTING 
+  table#restable
+        thead
+          tr
+            th FC_CODE
+            th NAME
+            th Date-Of-Birth
+            th Country-Of-Birth
+            th Country-of-Residence
+            th Passport#
+            th Email
+            th Phone Number

@@ -1,0 +1,177 @@
+head
+  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+  script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
+  script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
+  script(src='js/countrypicker.js')
+    script(src='js/actions.js')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+  link(rel='stylesheet', type='text/css', href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+  script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+  link#bootstrap-css(href='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css', rel='stylesheet')
+  script(src='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js')
+  link#bootstrap-css(href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css', rel='stylesheet')
+  script(src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js')
+    //  #script(src='//code.jquery.com/jquery-1.11.1.min.js')
+ 
+
+  
+  script.
+    $(document).ready(function() {
+    var t = $('#restable').DataTable();
+    //$("#btn1").click(function(){
+    $.ajax({
+    type: "GET",
+    url: "/api/members/",
+          }).done(function(data){
+    //  console.log("Response is:"+data.id+"-"+data.name);
+    $.each(data, function(item, obj) {
+    console.log("Response is:"+obj.FC_CODE+"-"+obj.MEMBER_NAME);
+    t.row.add(
+    [ obj.FC_CODE,
+    obj.MEMBER_NAME,
+    obj.MEMBER_DOB,
+    obj.BIRTH_COUNTRY,
+    obj.RESIDENCY_COUNTRY,
+    obj.PASSPORT_NUMBER,
+    obj.EMAIL,
+    obj.PHONENUMBER
+    ]).draw(false);
+    
+    //});
+    })
+    })
+    });
+
+
+block headerarea
+    .navbar
+      .navbar-inner
+        .container
+          a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href='#') WebApp
+          .nav-collapse
+            ul.nav
+              li.active
+                 a#logout(href="/logout/") Logout
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  | Dropdown 
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    a#logout(href='#') Logout
+                  li
+                    a(href='#') Another action
+                  li
+                    a(href='#') Something else here
+                  li.divider
+                  li.nav-header Nav header
+                  li
+                    a(href='#') Separated link
+                  li
+                    a(href='#') One more separated link
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  | Dropdown 
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    a(href='#') Action
+                  li
+                    a(href='#') Another action
+                  li
+                    a(href='#') Something else here
+                  li.divider
+                  li.nav-header Nav header
+                  li
+                    a(href='#') Separated link
+                  li
+                    a(href='#') One more separated link
+            ul.nav.pull-right
+              li.divider-vertical
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  | Dropdown 
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    a(href='#') Action
+                  li
+                    a(href='#') Another action
+                  li
+                    a(href='#') Something else here
+                  li.divider
+                  li
+                    a(href='#') Separated link
+
+
+block content
+
+block footer
+  footer.section.footer-classic.context-dark.bg-image(style='background: #2d3246;')
+    .container
+      .row.row-30
+        .col-md-4.col-xl-5
+          .pr-xl-4
+            a.brand(href='index.html')
+              img.brand-logo-light(src='images/agency/logo-inverse-140x37.png', alt='', width='140', height='37', srcset='images/agency/logo-retina-inverse-280x74.png 2x')
+            p
+              | We are an award-winning creative agency, dedicated to the best result in web design, promotion, business consulting, and marketing.
+            // Rights
+            p.rights
+              span &copy;&nbsp; 
+              span.copyright-year 2018
+              span &nbsp;
+              span Waves
+              span .&nbsp;
+              span All Rights Reserved.
+        .col-md-4
+          h5 Contacts
+          dl.contact-list
+            dt Address:
+            dd 798 South Park Avenue, Jaipur, Raj
+          dl.contact-list
+            dt email:
+            dd
+              a(href='mailto:#') dkstudioin@gmail.com
+          dl.contact-list
+            dt phones:
+            dd
+              a(href='tel:#') +91 7568543012
+              span or
+              a(href='tel:#') +91 9571195353
+        .col-md-4.col-xl-3
+          h5 Links
+          ul.nav-list
+            li
+              a(href='#') About
+            li
+              a(href='#') Projects
+            li
+              a(href='#') Blog
+            li
+              a(href='#') Contacts
+            li
+              a(href='#') Pricing
+    .row.no-gutters.social-container
+      .col
+        a.social-inner(href='#')
+          span.icon.mdi.mdi-facebook
+          span Facebook
+      .col
+        a.social-inner(href='#')
+          span.icon.mdi.mdi-instagram
+          span instagram
+      .col
+        a.social-inner(href='#')
+          span.icon.mdi.mdi-twitter
+          span twitter
+      .col
+        a.social-inner(href='#')
+          span.icon.mdi.mdi-youtube-play
+          span google
+

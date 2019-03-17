@@ -10,5 +10,29 @@
           
                             });
     })
+
+    $("#addmember").click(function(){
+      console.log("inside");
+        $.ajax({
+            type: "post",
+            url: "api/members/",
+        }).done(function(data){
+          
+                            });
+    })
+
+    
+
+    $("#logout").click(function(){
+      console.log("inside");
+        $.ajax({
+            type: "post",
+            url: "logout/",
+        }).done(function(data){
+          
+                            });
+    })
       });
+
+
  

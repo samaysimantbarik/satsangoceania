@@ -4,10 +4,10 @@ const mysql= require('mysql2');
 
 
 const pool = mysql.createPool({
-    host: 'www.db4free.net',
-    user: 'satsang',
-    password: 'Test@1234',
-    database: 'satsang',
+    host: 'remotemysql.com',
+    user: '8W47r6rNlr',
+    password: 'uSy9KeIEgW',
+    database: '8W47r6rNlr',
     acquireTimeout: 30000, //30 secs
     waitForConnections: true,
     connectionLimit: 10,

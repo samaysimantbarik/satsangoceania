@@ -4,11 +4,11 @@ const router = express.Router();
 const connection = require('../dbconnection/connection');
 const path = require('path');
 router.use(express.static(path.join(global.__basedir, 'public')));
-var session = require('express-session');
+
 
 
 router.get("/", function (req, res) {
-    session=req.session;
+  
     res.render('login');
 
 
@@ -18,6 +18,7 @@ router.get("/", function (req, res) {
 
 router.post("/api/signin/", function (req, res) {
     console.log("Inside signin");
+   
     var username = req.body.username;
     var password = req.body.pwd;
     var queryString = `SELECT FC_CODE FROM FCMASTER where email='${username}' and password ='${password}'`;
@@ -43,7 +44,12 @@ router.post("/api/signin/", function (req, res) {
             }
             else {
                 console.log("User Page displaying..")
-                res.render('userspage', { username: username ,  fcnum: result[0].FC_CODE });
+                console.log("FC_CODE before:"+ req.session.FC_CODE);
+                req.session.FC_CODE=result[0].FC_CODE;
+                req.session.username=username;
+                console.log("FC_CODE after:"+ req.session.FC_CODE);
+                res.redirect('/userspage');
+               // res.render('userspage', { username: username ,  fcnum: result[0].FC_CODE });
             }
         }
 
@@ -55,8 +61,21 @@ router.post("/api/signin/", function (req, res) {
 })
 
 
-router.post("/api/registeruser/", function (req, res) {
 
+router.get("/userspage/", function(req,res){
+    console.log("Username: "+ req.session.username);
+    if(req.session.username){
+    res.render('userspage',{ username: req.session.username ,  fcnum: req.session.FC_CODE });
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+
+router.post("/api/registeruser/", function (req, res) {
+ 
+    
     var name= req.body.name;
     var birthcountry = req.body.birthcountry;
     var residencycountry = req.body.residencycountry;
@@ -88,15 +107,26 @@ router.post("/api/registeruser/", function (req, res) {
                 else{
                //     console.log(result2);
                  //   console.log(username+","+FC_CODE);
-                    session.FC_CODE=FC_CODE;
-                    res.render('userspage', { username: username ,  fcnum:FC_CODE  });
+                 req.session.FC_CODE=FC_CODE;
+                 req.session.username=username;
+                 console.log("FC_CODE after:"+ req.session.FC_CODE);
+                 res.redirect('/userspage');
                 }});
            
         }
+    
     });
 
 
     //res.sendFile(__dirname + "/views/register.html");
 });
+
+
+router.get("/logout/",function(req,res){
+   req.session.destroy();
+   res.clearCookie('user_sid');
+    res.render('login');
+
+})
 
 module.exports = router;

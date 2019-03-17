@@ -2,11 +2,14 @@ const express = require("express");
 const router=  express.Router();
 const connection = require('../dbconnection/connection');
 
-var session = require('express-session');
+
 
 router.get("/", function (req, res) {
   console.log("Load Members...");
-    var query3=`SELECT * FROM  DEVOTEEMASTER WHERE FC_CODE= ${session.FC_CODE}`;
+  console.log("session fc code:"+req.session.FC_CODE);
+
+  if(req.session.username){
+   var query3=`SELECT * FROM  DEVOTEEMASTER WHERE FC_CODE= ${req.session.FC_CODE}`;
             console.log(query3);
             connection.query(query3, function (err3, result3, fields2) {
                 if(err3){
@@ -17,6 +20,11 @@ router.get("/", function (req, res) {
                     console.log(result3);
                   res.send(result3);
                 }});
+    }
+    else{
+        res.redirect('/');
+    }
+    
 });
  
 
@@ -29,8 +37,9 @@ router.post("/", function (req, res) {
     var dob= req.body.dob;
     var password= req.body.password;
     var username= name;
-    var FC_CODE=session.FC_CODE;
+    var FC_CODE=req.session.FC_CODE;
     //var FC_CODE= 
+    if(req.session.username){
     console.log("...FC code.."+FC_CODE);
     var query2=`INSERT INTO DEVOTEEMASTER  VALUES (${FC_CODE},'${name}','${dob}', '${birthcountry}', '${residencycountry}','passport', '${email}', '8')`;
             console.log(query2);
@@ -42,9 +51,13 @@ router.post("/", function (req, res) {
                 else{
                     console.log(result2);
                     console.log(username+","+FC_CODE);
-                    session.FC_CODE=FC_CODE;
+                   // req.session.FC_CODE=FC_CODE;
                     res.render('userspage', { username: username ,  fcnum:FC_CODE  });
                 }});
+            }
+            else{
+                res.render('login');
+            }
     
 });
 module.exports= router;
