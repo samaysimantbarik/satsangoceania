@@ -1,0 +1,85 @@
+head
+  meta(charset='utf-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  title LoginPage
+  link(rel='stylesheet', href='bootstrap.min.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700')
+  link(rel='stylesheet', href='Footer-Clean.css')
+  link(rel='stylesheet', href='Header-Blue.css')
+  link(rel='stylesheet', href='styles.css')
+div(style='height:10%;width:100%;')
+  .header-blue(style='height:5%;padding-bottom:0px;')
+    nav.navbar.navbar-dark.navbar-expand-md.navigation-clean-search
+      .container
+        a.navbar-brand(href='#', style='font-size:32px;')
+          | Satsang Oceania
+          img(src='satsangemblem.jpg', style='width:30%;margin-left:50%;')
+        button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
+          span.sr-only Toggle navigation
+          span.navbar-toggler-icon
+        #navcol-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+          a.btn.btn-light.action-button(role='button', href='#', style='margin-left:70%;height:50px;width:100px;') Logout
+p(style='width:80%;margin-right:10%;margin-left:10%;')
+  span(style='font-size:20px;margin-left:1%;')
+    strong WELCOME &nbsp;: SAMAY
+  span.float-right.flex-row.justify-content-between.align-self-end.mr-auto(style='font-size:18px;margin-left:0px;')
+    strong FAMILY CODE NUMBER: &nbsp;101
+.container
+  p(style='padding-top:30px;')
+    button.btn.btn-primary(type='button') Add Family Members
+    button.btn.btn-primary(type='button', style='margin-left:50%;') Istavrity Submission
+  .table-responsive(style='padding-top:10%;')
+    table.table
+      thead
+        tr
+          th Column 1
+          th Column 2
+      tbody
+        tr
+          td Cell 1
+          td Cell 2
+        tr
+          td Cell 3
+          td Cell 4
+.mb-auto.footer-clean(style='padding-bottom:0px;color:rgb(33,37,41);background-color:rgb(24,78,142);margin-top:30%;padding-top:50px;height:200px;')
+  footer(style='color:rgb(24,78,142);')
+    .container(style='background-color:rgba(33,37,41,0);color:rgb(238,242,247);height:100%;')
+      .row.justify-content-center
+        .col-sm-4.col-md-3.item
+          h3 Services
+          ul
+            li
+              a(href='#') Web design
+            li
+              a(href='#') Development
+            li
+              a(href='#') Hosting
+        .col-sm-4.col-md-3.item
+          h3 About
+          ul
+            li
+              a(href='#') Company
+            li
+              a(href='#') Team
+            li
+              a(href='#') Legacy
+        .col-sm-4.col-md-3.item
+          h3 Careers
+          ul
+            li
+              a(href='#') Job openings
+            li
+              a(href='#') Employee success
+            li
+              a(href='#') Benefits
+        .col-lg-3.item.social
+          a(href='#')
+            i.icon.ion-social-facebook
+          a(href='#')
+            i.icon.ion-social-twitter
+          a(href='#')
+            i.icon.ion-social-snapchat
+          a(href='#')
+            i.icon.ion-social-instagram
+          p.copyright Company Name &copy; 2017
