@@ -1,15 +1,11 @@
-extends header
+extends template
 
 block content
-  span Hello  
-  user= username
- 
-  p -------------
-  FCCODE= fcnum
+  
 
   br
   button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModalLong')
-    | Launch demo modal
+    | Add Family Members
   // Modal
   #exampleModalLong.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLongTitle', aria-hidden='true')
     .modal-dialog(role='document')
@@ -47,15 +43,23 @@ block content
               button#addmember.btn.btn-primary(type='submit') Save changes
         .modal-footer
           button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-  button#btn1(type='button')  POPULATE EXISTING 
-  table#restable
-        thead
-          tr
-            th FC_CODE
-            th NAME
-            th Date-Of-Birth
-            th Country-Of-Birth
-            th Country-of-Residence
-            th Passport#
-            th Email
-            th Phone Number
+  div
+    br
+    br
+    br
+    span(style='font-size:30px;margin-left:40%;margin-top:10px;')
+      strong|FAMILY MEMBERS
+    br
+    br
+    br
+    table#restable.stripe.table.table-striped.table-bordered
+          thead
+            tr(style='background-color: #6d7993;')
+              th FC_CODE
+              th NAME
+              th Date-Of-Birth
+              th Country-Of-Birth
+              th Country-of-Residence
+              th Passport#
+              th Email
+              th Phone Number
