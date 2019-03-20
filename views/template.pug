@@ -1,52 +1,53 @@
+doctype html
 head
   meta(charset='utf-8')
   meta(name='viewport', content='width=device-width, initial-scale=1.0')
   title LoginPage
-  
-  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700')
-  link(rel='stylesheet', href='css/headerfooter.css')
-  link(rel='stylesheet', href='Header-Blue.css')
-  link(rel='stylesheet', href='css/styles.min.css')
-  link(rel='stylesheet', src='css/style.css')
-  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
-  script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
-  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
-  script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
-  script(src='js/countrypicker.js')
-  script(src='js/actions.js')
-  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
-  link(rel='stylesheet', type='text/css', href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
-  script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
-  link#bootstrap-css(href='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css', rel='stylesheet')
-  script(src='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js')
-  link#bootstrap-css(href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css', rel='stylesheet')
-  script(src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js')
-  script.
-      $(document).ready(function() {
-      var t = $('#restable').DataTable();
-      //$("#btn1").click(function(){
-      $.ajax({
-      type: "GET",
-      url: "/api/members/",
-            }).done(function(data){
-      //  console.log("Response is:"+data.id+"-"+data.name);
-      $.each(data, function(item, obj) {
-      console.log("Response is:"+obj.FC_CODE+"-"+obj.MEMBER_NAME);
-      t.row.add(
-      [ obj.FC_CODE,
-      obj.MEMBER_NAME,
-      obj.MEMBER_DOB,
-      obj.BIRTH_COUNTRY,
-      obj.RESIDENCY_COUNTRY,
-      obj.PASSPORT_NUMBER,
-      obj.EMAIL,
-      obj.PHONENUMBER
-      ]).draw(false);
-      
-      //});
-      })
-      })
-      });
+  block scripts
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700')
+    link(rel='stylesheet', href='css/headerfooter.css')
+    link(rel='stylesheet', href='Header-Blue.css')
+    link(rel='stylesheet', href='css/styles.min.css')
+    link(rel='stylesheet', src='css/style.css')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
+    script(src='js/countrypicker.js')
+    script(src='js/actions.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    link(rel='stylesheet', type='text/css', href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+    script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+    link#bootstrap-css(href='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css', rel='stylesheet')
+    script(src='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js')
+    link#bootstrap-css(href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css', rel='stylesheet')
+    script(src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js')
+    script.
+        $(document).ready(function() {
+        var t = $('#restable').DataTable();
+        //$("#btn1").click(function(){
+        $.ajax({
+        type: "GET",
+        url: "/api/members/",
+              }).done(function(data){
+        //  console.log("Response is:"+data.id+"-"+data.name);
+        $.each(data, function(item, obj) {
+        console.log("Response is:"+obj.FC_CODE+"-"+obj.MEMBER_NAME);
+        t.row.add(
+        [ obj.FC_CODE,
+        obj.MEMBER_NAME,
+        obj.MEMBER_DOB,
+        obj.BIRTH_COUNTRY,
+        obj.RESIDENCY_COUNTRY,
+        obj.PASSPORT_NUMBER,
+        obj.EMAIL,
+        obj.PHONENUMBER
+        ]).draw(false);
+        
+        //});
+        })
+        })
+        });
 body(style='background-color: #d5d5d5;')
   block headerarea
       div(style='height:10%;width:100%;')

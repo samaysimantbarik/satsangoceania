@@ -60,6 +60,17 @@ router.post("/api/signin/", function (req, res) {
 
 })
 
+router.get("/user",function(req,res){
+    console.log(req);
+    var userid=req.query.id;
+    var queryString = `SELECT * FROM FCMASTER where FC_CODE='${userid}' `;
+    console.log(queryString);
+    connection.query(queryString, function (err, rows, fields) {
+         console.log(rows);
+         res.send(rows);
+                })
+
+})
 
 
 router.get("/userspage/", function(req,res){

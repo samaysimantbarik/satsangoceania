@@ -1,0 +1,105 @@
+extends template
+
+block append scripts
+  //- script.
+  //-     $(document).ready(function() {
+  //-     var t = $('#istavritytable').DataTable();
+     
+  //-     $.ajax({
+  //-     type: "GET",
+  //-     url: "/api/istavrity/members/",
+  //-           }).done(function(data){
+  //-     //  console.log("Response is:"+data.id+"-"+data.name);
+  //-     $.each(data, function(item, obj) {
+      
+  //-     t.row.add(
+  //-     [ 
+  //-     obj.MEMBER_NAME,
+  //-     'Ritwik name',
+  //-     '',
+  //-     '',
+  //-     '',
+  //-      ''
+      
+  //-     ]).draw(false);
+      
+  //-     //});
+  //-     })
+  //-     })
+  //-     });
+  script.
+    $(document).ready(function() {
+    editor = new $.fn.dataTable.Editor( {
+        table: "#istavritytable",
+        fields: [ {
+                label: "Name:",
+                name: "first_name"
+            }, {
+                label: "Ritwiks' Name:",
+                name: "Ritwiks' Name"
+            }, {
+                label: "Swastayani:",
+                name: "Swastayani"
+            }, {
+                label: "Istavrity:",
+                name: "Istavrity"
+            }, {
+                label: "Pronami:",
+                name: "Pronami"
+            }, {
+                label: "Miscellenous:",
+                name: "Miscellenous"
+               
+            }, {
+                label: "Miscellenous Desc:",
+                name: "Miscellenous_Desc"
+            }
+        ]
+    } );
+ 
+    $('#istavritytable').DataTable( {
+        dom: "Bfrtip",
+        ajax: "/api/istavrity/members/",
+        columns: [
+            { data: null, render: function ( data, type, row ) {
+                // Combine the first and last names into a single table field
+                return data.first_name+' '+data.last_name;
+            } },
+            { data: "position" },
+            { data: "office" },
+            { data: "extn" },
+            { data: "start_date" },
+            { data: "salary", render: $.fn.dataTable.render.number( ',', '.', 0, '$' ) }
+        ],
+        select: true,
+        buttons: [
+            { extend: "create", editor: editor },
+            { extend: "edit",   editor: editor },
+            { extend: "remove", editor: editor }
+        ]
+    } );
+} );
+
+block content
+  
+
+ 
+  div
+    br
+    br
+    br
+    span(style='font-size:30px;margin-left:40%;margin-top:10px;')
+      strong|Enter Istavrity Details
+    br
+    br
+    br
+    table#istavritytable.stripe.table.table-striped.table-bordered
+          thead
+            tr(style='background-color: #6d7993;')
+              th Name
+              th Ritwiks' Name
+              th Swastayani
+              th Istavrity
+              th Pronami
+              th Miscellenous
+               th Miscellenous_Desc
