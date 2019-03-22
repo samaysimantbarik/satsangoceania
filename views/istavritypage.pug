@@ -23,7 +23,7 @@ block append scripts
                 [ 
                 `<span name="membername" value=`+obj.MEMBER_NAME+`>`+obj.MEMBER_NAME+'</span>',
                 `<span name="ritwikname" value="RITWIK NAME" >`+"RITWIK NAME"+`</span>`,
-                `<input type="number" min="0" value=0 required="true" name="swastyani" id="swastayani${index}"/>`,
+                `<input type="number" data-validation="number" data-validation-allowing="range[1;100000]" name="swastyani" id="swastayani${index}"/>`,
                 `<input type="number" min="0" name="istavrity" id="istavirty${index}"/>`,
                 `<input type="number" min="0" name="pronami" id="pronami${index}"/>`,
                 `<input type="number" min="0" name="misc" id="misc${index}"/>`,
@@ -52,6 +52,10 @@ block append scripts
                  var pronami=cols[4].firstChild.value;
                  var miscellenous=cols[5].firstChild.value;
                  var miscellenousdesc=cols[6].firstChild.value;
+                 if(parseInt(swastayani)<0){
+                  $("#error").value="Value cant be negative";
+                     return
+                 }
 
                   $.ajax({
                             type: "POST",
@@ -152,6 +156,7 @@ block content
               th Miscellenous
               th Miscellenous_Desc    
     button.btn#submitistavrity(type="button")|SUBMIT
+    span#error
     |TOTALS:
     input#totalSwastayani(name='totalSwastayani',readonly="true")
     input#totalIstavrity(name='totalIstavrity',readonly="true")
