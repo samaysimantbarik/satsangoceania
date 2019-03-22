@@ -13,7 +13,7 @@ router.get("/", function (req, res) {
             console.log(query3);
             connection.query(query3, function (err3, result3, fields2) {
                 if(err3){
-                    console.log(err2);
+                    console.log(err3);
                     res.render('login', { errorRegister: err3 });
                 }
                 else{

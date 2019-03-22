@@ -15,6 +15,7 @@
     "bootstrap-select-country": "^4.0.0",
     "connect-redis": "^3.4.1",
     "consolidate": "^0.15.1",
+    "datatables.net-editor": "^1.6.5",
     "express": "*",
     "express-session": "^1.15.6",
     "jquery": "^3.3.1",
@@ -22,6 +23,7 @@
     "nodemon": "^1.18.10",
     "popper": "^1.0.1",
     "pug": "^2.0.3",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "tabulator-tables": "^4.2.3"
   }
 }

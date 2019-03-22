@@ -23,7 +23,7 @@ router.get("/members", function (req, res) {
                     res.render('istavritypage', { error: err3 });
                 }
                 else{
-                    console.log(result3);
+                  //console.log(result3);
                   res.send(result3);
                 }});
     }
@@ -32,5 +32,11 @@ router.get("/members", function (req, res) {
     }
     
 });
+
+router.post("/",function(req,res){
+
+    console.log(req.body);
+    //res.send(req.body);
+})
 
 module.exports= router;

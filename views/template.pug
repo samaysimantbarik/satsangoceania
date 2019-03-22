@@ -16,12 +16,22 @@ head
     script(src='js/countrypicker.js')
     script(src='js/actions.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    //- script(src='https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css')
+    //- script(src='https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css')
     link(rel='stylesheet', type='text/css', href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
-    script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+ 
+   
     link#bootstrap-css(href='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css', rel='stylesheet')
     script(src='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js')
     link#bootstrap-css(href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css', rel='stylesheet')
     script(src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js')
+
+      script(src='https://code.jquery.com/jquery-3.3.1.js')
+    script(src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+    script(src='dataTables.editor.min.js')
+    script(src='https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js')
+    script(src='https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js')
+    
     script.
         $(document).ready(function() {
         var t = $('#restable').DataTable();
@@ -48,6 +58,7 @@ head
         })
         })
         });
+
 body(style='background-color: #d5d5d5;')
   block headerarea
       div(style='height:10%;width:100%;')

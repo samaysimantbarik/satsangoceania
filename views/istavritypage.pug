@@ -1,85 +1,132 @@
 extends template
 
 block append scripts
-  //- script.
-  //-     $(document).ready(function() {
-  //-     var t = $('#istavritytable').DataTable();
-     
-  //-     $.ajax({
-  //-     type: "GET",
-  //-     url: "/api/istavrity/members/",
-  //-           }).done(function(data){
-  //-     //  console.log("Response is:"+data.id+"-"+data.name);
-  //-     $.each(data, function(item, obj) {
-      
-  //-     t.row.add(
-  //-     [ 
-  //-     obj.MEMBER_NAME,
-  //-     'Ritwik name',
-  //-     '',
-  //-     '',
-  //-     '',
-  //-      ''
-      
-  //-     ]).draw(false);
-      
-  //-     //});
-  //-     })
-  //-     })
-  //-     });
+  script(src='js/jquery.tableedit.min.js')
   script.
-    $(document).ready(function() {
-    editor = new $.fn.dataTable.Editor( {
-        table: "#istavritytable",
-        fields: [ {
-                label: "Name:",
-                name: "first_name"
-            }, {
-                label: "Ritwiks' Name:",
-                name: "Ritwiks' Name"
-            }, {
-                label: "Swastayani:",
-                name: "Swastayani"
-            }, {
-                label: "Istavrity:",
-                name: "Istavrity"
-            }, {
-                label: "Pronami:",
-                name: "Pronami"
-            }, {
-                label: "Miscellenous:",
-                name: "Miscellenous"
-               
-            }, {
-                label: "Miscellenous Desc:",
-                name: "Miscellenous_Desc"
-            }
-        ]
-    } );
- 
-    $('#istavritytable').DataTable( {
-        dom: "Bfrtip",
-        ajax: "/api/istavrity/members/",
-        columns: [
-            { data: null, render: function ( data, type, row ) {
-                // Combine the first and last names into a single table field
-                return data.first_name+' '+data.last_name;
-            } },
-            { data: "position" },
-            { data: "office" },
-            { data: "extn" },
-            { data: "start_date" },
-            { data: "salary", render: $.fn.dataTable.render.number( ',', '.', 0, '$' ) }
-        ],
-        select: true,
-        buttons: [
-            { extend: "create", editor: editor },
-            { extend: "edit",   editor: editor },
-            { extend: "remove", editor: editor }
-        ]
-    } );
-} );
+      $(document).ready(function() {
+      var t = $('#istavritytable').DataTable({
+        columnDefs: [{
+            orderable: false,
+            targets: [0,1,2,3,4,5,6]
+           
+        }]
+                 });
+      $.ajax({
+      type: "GET",
+      url: "/api/istavrity/members/",
+            }).done(function(data){
+      //  console.log("Response is:"+data.id+"-"+data.name);
+      var index=0;
+      $.each(data, function(item, obj) {
+      
+                t.row.add(
+                [ 
+                `<span name="membername" value=`+obj.MEMBER_NAME+`>`+obj.MEMBER_NAME+'</span>',
+                `<span name="ritwikname" value="RITWIK NAME" >`+"RITWIK NAME"+`</span>`,
+                `<input type="number" min="0" value=0 required="true" name="swastyani" id="swastayani${index}"/>`,
+                `<input type="number" min="0" name="istavrity" id="istavirty${index}"/>`,
+                `<input type="number" min="0" name="pronami" id="pronami${index}"/>`,
+                `<input type="number" min="0" name="misc" id="misc${index}"/>`,
+               `<input type="text"  name="miscdesc" id="miscdesc${index}"/>`,
+                ]).draw();
+                            index++;
+                                         })
+                     })
 
+    });
+  script.
+   $(document).ready(function() {
+        $("#submitistavrity").on('click', function(){
+
+            console.log("Submitted");
+           // var t = $('#istavritytable').DataTable();
+            //console.log(t.rows);
+             var a = $("#istavritytable").children("tbody").children("tr").each(function(){
+
+                 var cols=$(this).children("td");
+                 
+                 var membername=cols[0].firstChild.getAttribute('value');
+                 var ritwikname=cols[1].firstChild.getAttribute('value');
+                 var swastayani=cols[2].firstChild.value;
+                 var istavrity=cols[3].firstChild.value;
+                 var pronami=cols[4].firstChild.value;
+                 var miscellenous=cols[5].firstChild.value;
+                 var miscellenousdesc=cols[6].firstChild.value;
+
+                  $.ajax({
+                            type: "POST",
+                            url: "/api/istavrity/",
+                            data:{
+                           "membername" :membername,
+                           "ritwikname":ritwikname,
+                           "swastayani":swastayani,
+                           "pronami":pronami,
+                           "miscellenous":miscellenous,
+                           "miscellenousdesc":miscellenousdesc
+                            }
+                                    }).done(function(data){
+                                    })
+              
+                });
+      
+        })
+   });
+
+            
+  script.
+       jQuery.fn.dataTable.Api.register( 'sum()', function ( ) {
+            return this.flatten().reduce( function ( a, b ) {
+                if ( typeof a === 'string' ) {
+                    a = a.replace(/[^\d.-]/g, '') * 1;
+                }
+                if ( typeof b === 'string' ) {
+                    b = b.replace(/[^\d.-]/g, '') * 1;
+                }
+        
+                return a + b;
+            }, 0 );
+            } );
+  script.
+         function getSum(col){
+           
+            var sum=0;
+               $("tr").each(function(rowindex) {
+                    $(this).find("td:nth-child(" + col + ")").each(function(rowindex) {
+                        newval = $(this).find("input").val();
+                      
+                        if (isNaN(newval)) {
+                            
+                        sum += 0;
+                         
+                        } else {
+                        
+                          if(newval==''){
+                              newval=0;
+                          }
+                        sum += parseInt(newval);
+                       
+                        }
+                    });
+                   
+                    });
+                    
+                    return sum;
+                       }
+           $(document).ready(function() {
+         $("#submit").on('click',function(){
+               // console.log("Submit clicked");
+               // console.log( "sum outside:"+getSum(3));
+               document.getElementById("totalSwastayani").value=getSum(3);
+               document.getElementById("totalIstavrity").value=getSum(4);
+               document.getElementById("totalPronami").value=getSum(5);
+               document.getElementById("totalMiscellenous").value=getSum(6);
+               document.getElementById("total").value=getSum(3)+getSum(4)+getSum(5)+getSum(5);
+           });
+           });
+
+
+
+         
 block content
   
 
@@ -93,8 +140,9 @@ block content
     br
     br
     br
-    table#istavritytable.stripe.table.table-striped.table-bordered
-          thead
+    //form(action="/api/istavrity/",method='post')
+    table#istavritytable
+         thead
             tr(style='background-color: #6d7993;')
               th Name
               th Ritwiks' Name
@@ -102,4 +150,14 @@ block content
               th Istavrity
               th Pronami
               th Miscellenous
-               th Miscellenous_Desc
+              th Miscellenous_Desc    
+    button.btn#submitistavrity(type="button")|SUBMIT
+    |TOTALS:
+    input#totalSwastayani(name='totalSwastayani',readonly="true")
+    input#totalIstavrity(name='totalIstavrity',readonly="true")
+    input#totalPronami(name='totalPronami',readonly="true")
+    input#totalMiscellenous(name='totalMiscellenous',readonly="true")
+    br
+    input#total(name='total',readonly="true")
+    br
+    button#submit.btn.btn-success|CALCULATE TOTAL             
