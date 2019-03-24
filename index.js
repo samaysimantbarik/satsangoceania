@@ -50,7 +50,7 @@ app.use('*/images',express.static('public/images'));
 app.use(session({secret: 'ssshhhhh'}));
 
 
-app.engine('html', cons.swig)
+//app.engine('html', cons.swig)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, "assets")));

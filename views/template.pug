@@ -82,12 +82,55 @@ body(style='background-color: #d5d5d5;')
         span.float-right.flex-row.justify-content-between.align-self-end.mr-auto(style='font-size:18px;margin-left:0px;')
           strong FAMILY CODE NUMBER: &nbsp;
           FCCODE= fcnum
+div
+    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModalLong')
+      | Add Family Members
+    form(action='/api/istavrity', method='GET')
+      button.btn.btn-primary(type='submit')
+                |Pay Istavrity
+//Modal    
+#exampleModalLong.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLongTitle', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLongTitle.modal-title Members
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          form(action='/api/members/', method='POST')
+            .md-form
+              label(for='orangeForm-name3') Name
+              i.fa.fa-user.prefix.grey-text
+              input#orangeForm-name3.form-control(type='text', name='name')
+            .md-form
+              br
+              label(for='orangeForm-name3') Country of Birth
+              select.form-control.selectpicker.countrypicker(name='birthcountry', data-default='India')
+            .md-form
+              br
+              label(for='orangeForm-name3') Country of Residency
+              select.form-control.selectpicker.countrypicker(name='residencycountry', data-default='Australia')
+            .md-form
+              br
+              label(for='orangeForm-email3') Email
+              i.fa.fa-envelope.prefix.grey-text
+              input#orangeForm-email3.form-control(type='email', name='email')
+            .md-form
+              br
+              label(for='orangeForm-email3') Date Of Birth
+              i.fa.fa-envelope.prefix.grey-text
+              input#orangeForm-email3.form-control(type='date', placeholder='Date of Birth', name='dob')
+            .md-form
+              br
+              button#addmember.btn.btn-primary(type='submit') Save changes
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-dismiss='modal') Close
 
-  block content
+block content
 
 
-  block footer
-  .mb-auto.footer-clean(style='color:rgb(33,37,41);background-color:rgb(24,78,142);position:fixed;width:100%;bottom:0')
+block footer
+  .mb-auto.footer-clean(style='display:none;color:rgb(33,37,41);background-color:rgb(24,78,142);position:fixed;width:100%;bottom:0')
     footer(style='color:rgb(24,78,142);')
       .container(style='background-color:rgba(33,37,41,0);color:rgb(238,242,247);height:100%;')
         .row.justify-content-center
