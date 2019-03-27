@@ -33,6 +33,7 @@ else{
 const login = require("./services/home");
 const users = require("./services/users");
 const istavrity= require("./services/istavrity");
+const payment= require("./services/payment");
 
 
 
@@ -59,6 +60,7 @@ app.use(express.urlencoded())
 app.use("/", login);
 app.use("/api/members/", users);
 app.use("/api/istavrity/", istavrity);
+app.use("/api/payment/", payment);
 
 
 

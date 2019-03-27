@@ -41,8 +41,12 @@ router.get("/members", function (req, res) {
 router.post("/",async function(req,res){
     var noerrorfound=true;
     console.log("Request Body:"+req.body);
+    req.session.istavrityobject= req.body;
     console.log("--------------------------");
     let response;
+    
+    res.redirect('/api/payment');
+/*
   if(req.session.username){
    
             var month= req.body.istavrityDate.split(" ")[0];
@@ -126,6 +130,7 @@ router.post("/",async function(req,res){
         else{
             res.redirect('/');
         }
+    */
 })
 
 

@@ -24,6 +24,7 @@
     "nodemon": "^1.18.10",
     "popper": "^1.0.1",
     "pug": "^2.0.3",
+    "stripe": "^6.28.0",
     "swig": "^1.4.2",
     "tabulator-tables": "^4.2.3"
   }
