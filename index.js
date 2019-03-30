@@ -42,6 +42,7 @@ const payment= require("./services/payment");
 // view engine setup
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/assets/')));
 
 app.use('/css/',express.static(path.join(__dirname, 'public/css')));
 

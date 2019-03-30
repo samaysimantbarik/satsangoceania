@@ -1,12 +1,107 @@
-html
-  body
-    form(action="/api/payment/charge", method="post")
-      article
-        label Amount: $5.00
-      script(
-        src="//checkout.stripe.com/v2/checkout.js",
-        class="stripe-button",
-        data-key=keyPublishable,
-        data-locale="auto",
-        data-description="Sample Charge",
-        data-amount="500")
+//- extends template
+
+//- block append scripts
+
+head
+  link(rel='stylesheet', href='css/bootstrap.min.css')
+  link(rel='stylesheet', href='css/fonts/font-awesome.min.css')
+  link(rel='stylesheet', href='css/Bootstrap-Payment-Form.css')
+  link(rel='stylesheet', href='css/styles.css')
+  script#bs-live-reload(data-sseport='52930', data-lastchange='1553912623473', src='/js/livereload.js')
+  //script(src='/js/jquery-3.2.1.min.js')
+
+body
+ header(style='width:100%;')
+  .row(style='width:100%;background-color:#86a7d9;margin-right:0px;margin-left:0px;')
+    .col(style='width:100%;')
+      span.d-inline-block.justify-content-center.align-items-center.align-content-center(style='margin-left:35%;font-size:36px;')
+        strong
+          span(style='text-decoration: underline;') Enter Payment Details
+ br
+ div(style='height:50%;')
+  .container
+    form
+      .form-row
+        .col-md-6
+          .card.credit-card-box
+            .card-header
+              h6.mb-0
+                span.panel-title-text Address Details 
+            .card-body
+              .form-row
+                .col-12
+                  .form-group
+                    label(for='address-line1') Address Line 1
+                    .input-group
+                      input#address-line1.form-control(type='tel', required='', placeholder='Address Line 1')
+                      .input-group-append
+                  .form-group
+                    label(for='address-line2') Address Line 2
+                    .input-group
+                      input#address-line2.form-control(type='tel', required='', placeholder='Address Line 2')
+                      .input-group-append
+                  .form-group
+                    label(for='address-city') City
+                    .input-group
+                      input#address-line2.form-control(type='tel', required='', placeholder='City')
+                      .input-group-append
+                  .form-group
+                    label(for='address-state') State
+                    .input-group
+                      input#address-state.form-control(type='tel', required='', placeholder='State')
+                      .input-group-append
+                  .form-group
+                    label(for='address-postcode') Postcode
+                    .input-group
+                      input#address-postcode.form-control(type='tel', required='', placeholder='Postcode')
+                      .input-group-append
+                  .form-group
+                    label(for='address-country') Country
+                    .input-group
+                      input#address-country.form-control(type='tel', required='', placeholder='Country')
+                      .input-group-append
+        .col-md-6
+          .card.credit-card-box
+            .card-header
+              h6.mb-0
+                span.panel-title-text Payment Details 
+                img.img-fluid.panel-title-image(src='/accepted_cards.png')
+            .card-body
+              .form-row
+                .col-12
+                  .form-group
+                    label(for='cc-name') Name On Card
+                    input#cc-name.form-control(type='text')
+
+              .form-row
+                .col-12
+                  .form-group
+                    label(for='cc-number') Card number 
+                    .input-group
+                      input#cc-number.form-control(type='tel', required='', placeholder='Valid Card Number')
+                      .input-group-append
+                        span.input-group-text
+                          i.fa.fa-credit-card
+              .form-row
+                .col-3
+                  .form-group
+                    label(for='cc-expiry-month') Expiry Month
+                    input#cc-expiry-month.form-control(type='tel', required='', placeholder='MM')
+                .col-3
+                  .form-group.pull-right
+                    label(for='cc-expiry-year') Expiry Year
+                    input#cc-expiry-year.form-control(type='tel', required='', placeholder='YY')
+                //-   .form-group
+                //-     label(for='cardExpiry')
+                //-       span expiration 
+                //-       span EXP 
+                //-       |  date
+                //-     input#cardExpiry.form-control(type='tel', required='', placeholder='MM / YY')
+                .col-5
+                    .form-group
+                        label(for='cardCVC') CV Code
+                        input#cardCVC.form-control(type='tel', required='', placeholder='CVC')
+              
+          button.btn.btn-success.btn-block.btn-lg(type='submit') Pay Now
+      .form-row
+        .col-12

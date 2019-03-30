@@ -29,76 +29,38 @@ block append scripts
       
                 t.row.add(
                 [ 
-                `<input name="membername" readonly="readonly" value=`+obj.MEMBER_NAME+`>`,
-                `<input name="ritwikname" readonly="readonly" value="RITWIK NAME" >`,
-                `<input type="number" value=0  name="swastyani" id="swastayani${index}" required>`,
-                `<input type="number" min="1" value=0 name="istavrity" id="istavirty${index}" required>`,
-                `<input type="number" min="0" value=0 name="pronami" id="pronami${index}" required>`,
-                `<input type="number" min="0" value=0 name="misc" id="misc${index}" required>`,
-               `<input type="text"  name="miscdesc" id="miscdesc${index}"/>`,
+              
+                `<input class="col" name="membername" readonly="readonly" value=`+obj.MEMBER_NAME+`>`,
+                `<input class="col-sm-8" name="ritwikname" readonly="readonly" value="RITWIK NAME" >`,
+                `<input class="col-sm-8" type="number" value=0  name="swastyani" id="swastayani${index}" required>`,
+                `<input class="col-sm-8" type="number" min="1" value=0 name="istavrity" id="istavirty${index}" required>`,
+                `<input class="col-sm-8" type="number" min="0" value=0 name="pronami" id="pronami${index}" required>`,
+                `<input class="col-sm-8" type="number" min="0" value=0 name="misc" id="misc${index}" required>`,
+               `<input class="col-sm-8" type="text"  name="miscdesc" id="miscdesc${index}"/>`,
+              
                 ]).draw();
                             index++;
                                          })
+             $('#istavritytable input:not([readonly])').change(function(){
+               console.log("Value Changed");
+                document.getElementById("totalSwastayani").value=getSum(3);
+               document.getElementById("totalIstavrity").value=getSum(4);
+               document.getElementById("totalPronami").value=getSum(5);
+               document.getElementById("totalMiscellenous").value=getSum(6);
+               var calcTotal=getSum(3)+getSum(4)+getSum(5)+getSum(5);
+               document.getElementById("caltotal").value=calcTotal;
+               var fees= (calcTotal*0.0175)+0.3;
+               document.getElementById("procfees").value=fees;
+               var totalfees=calcTotal+fees;
+               document.getElementById("total").value=totalfees;
+              });
+             //console.log("num of fields:"+$('#istavritytable input:not([readonly])').length)
                      })
-
+         
+        
     });
 
-  // below ajax is for submitting istavrity - need to be uncomented if form way failes  
-  //- script.
-  //-  $(document).ready(function() {
-  //-       $("#submitistavrity").on('click', function(){
-  //-            $("#error").hide();
-  //-           console.log("Submitted");
-  //-          // var t = $('#istavritytable').DataTable();
-  //-           //console.log(t.rows);
-  //-            var a = $("#istavritytable").children("tbody").children("tr").each(function(){
-
-  //-                var cols=$(this).children("td");
-                 
-  //-                var membername=cols[0].firstChild.getAttribute('value');
-  //-                var ritwikname=cols[1].firstChild.getAttribute('value');
-  //-                var swastayani=cols[2].firstChild.value;
-  //-                var istavrity=cols[3].firstChild.value;
-  //-                var pronami=cols[4].firstChild.value;
-  //-                var miscellenous=cols[5].firstChild.value;
-  //-                var miscellenousdesc=cols[6].firstChild.value;
-  //-                if(parseInt(swastayani)<0){
-  //-                 $("#error").html("Value cant be negative");
-  //-                    return;
-  //-                }
-
-  //-                 $.ajax({
-  //-                           type: "POST",
-  //-                           url: "/api/istavrity/",
-  //-                           data:{
-                           
-  //-                          "year":$("#ui-datepicker-div .ui-datepicker-year :selected").text(),
-  //-                          "month":$("#ui-datepicker-div .ui-datepicker-month :selected").text(),
-  //-                          "membername" :membername,
-  //-                          "ritwikname":ritwikname,
-  //-                          "swastayani":swastayani,
-  //-                          "istavrity":istavrity,
-  //-                          "pronami":pronami,
-  //-                          "miscellenous":miscellenous,
-  //-                          "miscellenousdesc":miscellenousdesc
-  //-                           }
-  //-                                   }).done(function(data){
-  //-                                     if(data.error.includes("Duplicate")){
-  //-                                       console.log("eror:"+data.error);
-                                       
-  //-                                     $("#error").html("Form Already Submitted For the Month-Year");
-  //-                                     }
-  //-                                    // console.log("data"+data.error);
-  //-                                   })
-  //-                                   .fail(function (jqXHR, textStatus){
-  //-                                    console.log("error:"+textStatus);
-  //-                                   })
-              
-  //-               });
-      
-  //-       })
-  //-  });
-
+  
             
   script.
        jQuery.fn.dataTable.Api.register( 'sum()', function ( ) {
@@ -139,17 +101,22 @@ block append scripts
                     
                     return sum;
                        }
-           $(document).ready(function() {
+        $(document).ready(function() {
              
-         $("#submit").on('click',function(){
-               // console.log("Submit clicked");
-               // console.log( "sum outside:"+getSum(3));
-               document.getElementById("totalSwastayani").value=getSum(3);
-               document.getElementById("totalIstavrity").value=getSum(4);
-               document.getElementById("totalPronami").value=getSum(5);
-               document.getElementById("totalMiscellenous").value=getSum(6);
-               document.getElementById("total").value=getSum(3)+getSum(4)+getSum(5)+getSum(5);
-           });
+        //-  $("#calculateTotal").on('click',function(){
+        //-        // console.log("Submit clicked");
+        //-        // console.log( "sum outside:"+getSum(3));
+        //-        document.getElementById("totalSwastayani").value=getSum(3);
+        //-        document.getElementById("totalIstavrity").value=getSum(4);
+        //-        document.getElementById("totalPronami").value=getSum(5);
+        //-        document.getElementById("totalMiscellenous").value=getSum(6);
+        //-        var calcTotal=getSum(3)+getSum(4)+getSum(5)+getSum(5);
+        //-        document.getElementById("caltotal").value=calcTotal;
+        //-        var fees= (calcTotal*0.0175)+0.3;
+        //-        document.getElementById("procfees").value=fees;
+        //-        var totalfees=calcTotal+fees;
+        //-        document.getElementById("total").value=totalfees;
+        //-    });
            });
   script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js')
   link(rel='stylesheet', type='text/css', media='screen', href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css')
@@ -169,7 +136,14 @@ block append scripts
   style.
         .ui-datepicker-calendar {
         display: none;
-        }
+        };
+  script(type='text/javascript').
+         $(document).ready(function() {
+          $('#istavritytable input:not([readonly])').change(function(){
+            console.log("Value Changed");
+ 
+         });
+         });
 
 
          
@@ -206,15 +180,34 @@ block content
                   th(scope="col") Miscellenous
                   th(scope="col") Miscellenous_Desc 
       br
-      
-      br   
-      button.btn#submitistavrity(type="submit")|SUBMIT
-    |TOTALS:
-    input#totalSwastayani(name='totalSwastayani',readonly="true")
-    input#totalIstavrity(name='totalIstavrity',readonly="true")
-    input#totalPronami(name='totalPronami',readonly="true")
-    input#totalMiscellenous(name='totalMiscellenous',readonly="true")
-    br
-    input#total(name='total',readonly="true")
-    br
-    button#submit.btn.btn-success|CALCULATE TOTAL             
+     
+      div
+        button#calculateTotal2.btn.btn-success(type="submit")|CALCULATE TOTAL
+        input#totalSwastayani(name='totalSwastayani',readonly="true",style=("margin-left:17%;width:10%"))
+        input#totalIstavrity(name='totalIstavrity',readonly="true",style=("margin-left:2%;width:10%"))
+        input#totalPronami(name='totalPronami',readonly="true",style=("margin-left:2%;width:10%"))
+        input#totalMiscellenous(name='totalMiscellenous',readonly="true",style=("margin-left:2%;width:10%"))
+      br
+      div(style=("margin-left:50%"))
+       table.table(style=("width:50%"))
+        thead.thead-dark
+          tr
+            th SUMMARY
+            th AMOUNT
+        tbody
+          tr
+            td CALCULATED TOTAL: 
+            td 
+              input#caltotal(name='total',readonly="true")
+          tr
+            td PROCESSING FEES: 
+            td 
+              input#procfees(name='total',readonly="true")
+          tr
+            td  FINAL TOTAL: 
+            td 
+              input#total(name='total',readonly="true")
+        br
+     
+
+      //button.btn#submitistavrity(type="submit")|SUBMIT
