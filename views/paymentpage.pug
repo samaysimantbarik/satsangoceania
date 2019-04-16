@@ -1,107 +1,186 @@
-//- extends template
-
-//- block append scripts
-
+doctype html
+meta(name='viewport', content='width=device-width, initial-scale=1.0')
 head
-  link(rel='stylesheet', href='css/bootstrap.min.css')
-  link(rel='stylesheet', href='css/fonts/font-awesome.min.css')
-  link(rel='stylesheet', href='css/Bootstrap-Payment-Form.css')
-  link(rel='stylesheet', href='css/styles.css')
-  script#bs-live-reload(data-sseport='52930', data-lastchange='1553912623473', src='/js/livereload.js')
-  //script(src='/js/jquery-3.2.1.min.js')
+      link(rel='stylesheet', href='css/bootstrap.min.css')
+      link(rel='stylesheet', href='css/fonts/font-awesome.min.css')
+      link(rel='stylesheet', href='css/Bootstrap-Payment-Form.css')
+      link(rel='stylesheet', href='css/styles.css')
+      script#bs-live-reload(data-sseport='52930', data-lastchange='1553912623473', src='/js/livereload.js')
+      //script(src='/js/jquery-3.2.1.min.js')
+      script(src='https://cdn.pinpayments.com/pin.v2.js')
+      script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+
+      script.
+        $(document).ready(function() {
+              $("#keyPublishable").hide();
+              console.log("Inside function");
+              var keyPublishable = $("#keyPublishable").val();
+              console.log("keyPublishable$"+keyPublishable+"$")
+              var pinApi = new Pin.Api(`${keyPublishable}`, 'test');
+
+              var form = $('form.pin'),
+                submitButton = form.find(":submit"),
+                errorContainer = form.find('.errors'),
+                errorList = errorContainer.find('ul'),
+                errorHeading = errorContainer.find('h3');
+    
+            form.submit(function(e) {
+              console.log("Inside form submit");
+                e.preventDefault();
+
+                // Clear previous errors
+                errorList.empty();
+                errorHeading.empty();
+                errorContainer.hide();
+                console.log("1");
+                // Disable the submit button to prevent multiple clicks
+                submitButton.attr({disabled: true});
+                console.log("2");
+                // Fetch details required11 for the createToken call to Pin Payments
+                var card = {
+                number:           $('#cc-number').val(),
+                name:             $('#cc-name').val(),
+                expiry_month:     $('#cc-expiry-month').val(),
+                expiry_year:      $('#cc-expiry-year').val(),
+                cvc:              $('#cc-cvc').val(),
+                address_line1:    $('#address-line1').val(),
+                address_line2:    $('#address-line2').val(),
+                address_city:     $('#address-city').val(),
+                address_state:    $('#address-state').val(),
+                address_postcode: $('#address-postcode').val(),
+                address_country:  $('#address-country').val()
+                };
+
+                // Request a token for the card from Pin Payments
+                pinApi.createCardToken(card).then(handleSuccess, handleError).done();
+            });
+
+            function handleSuccess(card) {
+              console.log("success");
+                // Add the card token to the form
+                //
+                // Once you have the card token on your server you can use your
+                // private key and Charges API to charge the credit card.
+                $('<input>')
+                .attr({type: 'hidden', name: 'card_token'})
+                .val(card.token)
+                .appendTo(form);
+
+                // Resubmit the form to the server
+                //
+                // Only the card_token will be submitted to your server. The
+                // browser ignores the original form inputs because they don't
+                // have their 'name' attribute set.
+                console.log("4");
+                form.get(0).submit();
+            }
+
+            function handleError(response) {
+              console.log("5");
+              console.log(response.error_description);
+                errorHeading.text(response.error_description);
+
+                if (response.messages) {
+                $.each(response.messages, function(index, paramError) {
+                    $('<li>')
+                    .text(paramError.param + ": " + paramError.message)
+                    .appendTo(errorList);
+                });
+                }
+
+                errorContainer.show();
+
+                // Re-enable the submit button
+                submitButton.removeAttr('disabled');
+            };
+            });
 
 body
- header(style='width:100%;')
-  .row(style='width:100%;background-color:#86a7d9;margin-right:0px;margin-left:0px;')
-    .col(style='width:100%;')
-      span.d-inline-block.justify-content-center.align-items-center.align-content-center(style='margin-left:35%;font-size:36px;')
-        strong
-          span(style='text-decoration: underline;') Enter Payment Details
- br
- div(style='height:50%;')
-  .container
-    form
-      .form-row
-        .col-md-6
-          .card.credit-card-box
-            .card-header
-              h6.mb-0
-                span.panel-title-text Address Details 
-            .card-body
-              .form-row
-                .col-12
-                  .form-group
-                    label(for='address-line1') Address Line 1
-                    .input-group
-                      input#address-line1.form-control(type='tel', required='', placeholder='Address Line 1')
-                      .input-group-append
-                  .form-group
-                    label(for='address-line2') Address Line 2
-                    .input-group
-                      input#address-line2.form-control(type='tel', required='', placeholder='Address Line 2')
-                      .input-group-append
-                  .form-group
-                    label(for='address-city') City
-                    .input-group
-                      input#address-line2.form-control(type='tel', required='', placeholder='City')
-                      .input-group-append
-                  .form-group
-                    label(for='address-state') State
-                    .input-group
-                      input#address-state.form-control(type='tel', required='', placeholder='State')
-                      .input-group-append
-                  .form-group
-                    label(for='address-postcode') Postcode
-                    .input-group
-                      input#address-postcode.form-control(type='tel', required='', placeholder='Postcode')
-                      .input-group-append
-                  .form-group
-                    label(for='address-country') Country
-                    .input-group
-                      input#address-country.form-control(type='tel', required='', placeholder='Country')
-                      .input-group-append
-        .col-md-6
-          .card.credit-card-box
-            .card-header
-              h6.mb-0
-                span.panel-title-text Payment Details 
-                img.img-fluid.panel-title-image(src='/accepted_cards.png')
-            .card-body
-              .form-row
-                .col-12
-                  .form-group
-                    label(for='cc-name') Name On Card
-                    input#cc-name.form-control(type='text')
+    header(style='width:100%;')
+      .row(style='width:100%;background-color:#86a7d9;margin-right:0px;margin-left:0px;')
+        .col(style='width:100%;')
+          span.d-inline-block.justify-content-center.align-items-center.align-content-center(style='margin-left:35%;font-size:36px;')
+            strong
+              span(style='text-decoration: underline;') Enter Payment Details
+    br
+    input#keyPublishable(value=`${keyPublishable}`)
+    div(style='height:50%;')
+      .container
+        form.pin(action='/api/payment/charge', method='POST')
+          
+          .errors(style='color:red') 
+          h2
+            errorMsg= errorMsg
+            h3
+            ul
+          .form-row
+            .col-md-6
+              .card.credit-card-box
+                .card-header
+                  h6.mb-0
+                    span.panel-title-text Address Details 
+                .card-body
+                  .form-row
+                    .col-12
+                      .form-group
+                        label(for='address-line1') Address
+                        .input-group
+                          input#address-line1.form-control(type='tel', required='')
+                          .input-group-append
+                    
+                      .form-group
+                        label(for='address-city') City
+                        .input-group
+                          input#address-line2.form-control(type='tel', required='')
+                          .input-group-append
+                  
+                      .form-group
+                        label(for='address-country') Country
+                        .input-group
+                          input#address-country.form-control(type='tel', required='', value='Australia')
+                          .input-group-append
+            .col-md-6
+              .card.credit-card-box
+                .card-header
+                  h6.mb-0
+                    span.panel-title-text Payment Details 
+                    img.img-fluid.panel-title-image(src='images/accepted_cards.png')
+                .card-body
+                  .form-row
+                    .col-12
+                      .form-group
+                        label(for='cc-name') Name On Card
+                        input#cc-name.form-control(type='text')
 
-              .form-row
-                .col-12
-                  .form-group
-                    label(for='cc-number') Card number 
-                    .input-group
-                      input#cc-number.form-control(type='tel', required='', placeholder='Valid Card Number')
-                      .input-group-append
-                        span.input-group-text
-                          i.fa.fa-credit-card
-              .form-row
-                .col-3
-                  .form-group
-                    label(for='cc-expiry-month') Expiry Month
-                    input#cc-expiry-month.form-control(type='tel', required='', placeholder='MM')
-                .col-3
-                  .form-group.pull-right
-                    label(for='cc-expiry-year') Expiry Year
-                    input#cc-expiry-year.form-control(type='tel', required='', placeholder='YY')
-                //-   .form-group
-                //-     label(for='cardExpiry')
-                //-       span expiration 
-                //-       span EXP 
-                //-       |  date
-                //-     input#cardExpiry.form-control(type='tel', required='', placeholder='MM / YY')
-                .col-5
-                    .form-group
-                        label(for='cardCVC') CV Code
-                        input#cardCVC.form-control(type='tel', required='', placeholder='CVC')
-              
-          button.btn.btn-success.btn-block.btn-lg(type='submit') Pay Now
-      .form-row
-        .col-12
+                  .form-row
+                    .col-12
+                      .form-group
+                        label(for='cc-number') Card number 
+                        .input-group
+                          input#cc-number.form-control(type='tel', required='', placeholder='Valid Card Number')
+                          .input-group-append
+                            span.input-group-text
+                              i.fa.fa-credit-card
+                  .form-row
+                    .col-3
+                      .form-group
+                        label(for='cc-expiry-month') Expiry Month
+                        input#cc-expiry-month.form-control(type='tel', required='', placeholder='MM')
+                    .col-3
+                      .form-group.pull-right
+                        label(for='cc-expiry-year') Expiry Year
+                        input#cc-expiry-year.form-control(type='tel', required='', placeholder='YY')
+                    //-   .form-group
+                    //-     label(for='cardExpiry')
+                    //-       span expiration 
+                    //-       span EXP 
+                    //-       |  date
+                    //-     input#cardExpiry.form-control(type='tel', required1='', placeholder='MM / YY')
+                    .col-5
+                        .form-group
+                            label(for='cc-cvc') CV Code
+                            input#cc-cvc.form-control(type='tel', required='', placeholder='CVC' )
+                  
+              button.btn.btn-success.btn-block.btn-lg(type='submit') Pay Now
+          .form-row
+            .col-12

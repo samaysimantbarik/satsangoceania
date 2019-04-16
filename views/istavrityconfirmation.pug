@@ -1,4 +1,90 @@
+
 extends template
 
+block append head
+    title Argya Praswasti
+
+block append scripts
+    
+    script(src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js")
+    script(src="http://html2canvas.hertzen.com/dist/html2canvas.min.js")
+    script.
+        $(document).ready(function() {
+
+                function print() {
+                    const filename  = 'Argya-Praswasti.pdf';
+                    html2canvas(document.querySelector('#content')).then(canvas => {
+                //let pdf = new jsPDF('p', 'mm', 'a4');
+                 let pdf = new jsPDF("l", "mm", "a3");
+                pdf.addImage(canvas.toDataURL('image/png',1.0), 'PNG', 20, 50, 0, 0);
+                pdf.save(filename);
+                });}
+                
+                 $('#cmd').click(function(){
+                       print();
+                  })
+             
+            });
+
+
 block content
-    h1|Istavrity submitted succesfully.
+    div(style='margin-top:10%;background-color:white')
+            .row
+            #content  
+                .row
+                    .col-md-6.col-sm-2
+                        img(src="images/satsangemblem.jpg",style=('max-width:30%;height:auto'))
+                    
+                        div(style="padding-top: 10%;font-size: 50px;float:right")
+                         STRONG()
+                            |ARGYA PRASWASTI    
+                    .col-md-4.offset-xl-2
+                       .container-fluid(style="float:right;padding-top:5%")
+                        span
+                            strong MONTH
+                            | : &nbsp; 
+                            month= month
+                        br
+                        span
+                            strong YEAR
+                            | : &nbsp; 
+                            year= year
+              
+                        br
+                        span
+                            strong Name
+                            | : &nbsp; 
+                            name= name
+                        br
+                        span
+                            strong FC CODE
+                            | : &nbsp; 
+                            fccode= fccode
+                .table-responsive-lg.d-block(style='margin-top:30px;border-style:solid')
+                    table.table.table-striped.table-sm.table-bordered(style='border-style:double')
+                        thead(style='background-color:#252020;color:rgb(255,255,255);')
+                            tr
+                            th Name
+                            th Ritwik Name
+                            th Swastayani
+                            th Istavrity
+                            th Pronami
+                            th Misc
+                            th Misc Description
+                        
+                        tbody
+                            each obj in rows
+
+                                tr
+                                    td= obj.MEMBERNAME
+                                    td= obj.RITWIK
+                                    td= obj.SWASTANI
+                                    td= obj.ISTAVRITY
+                                    td= obj.PRONAMI
+                                    td= obj.MISC_AMT
+                                    td= obj.MISC_DESC
+                .row
+                .col(style='width:100%;')
+                label.col-form-label Total: &nbsp; XXXXXXXXXXX
+            #editor
+            button#cmd generate PDF

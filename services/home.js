@@ -5,6 +5,10 @@ const connection = require('../dbconnection/connection');
 const path = require('path');
 router.use(express.static(path.join(global.__basedir, 'public')));
 
+router.get("/api/test/", function (req, res) {
+   
+    res.render("istavrityconfirmation");
+})
 
 
 router.get("/", function (req, res) {
@@ -48,7 +52,7 @@ router.post("/api/signin/", function (req, res) {
                 req.session.FC_CODE=result[0].FC_CODE;
                 req.session.username=username;
                 console.log("FC_CODE after:"+ req.session.FC_CODE);
-                res.redirect('/userspage');
+                res.redirect('/api/members');
                // res.render('userspage', { username: username ,  fcnum: result[0].FC_CODE });
             }
         }
@@ -60,41 +64,39 @@ router.post("/api/signin/", function (req, res) {
 
 })
 
-router.get("/user",function(req,res){
-    console.log(req);
-    var userid=req.query.id;
-    var queryString = `SELECT * FROM FCMASTER where FC_CODE='${userid}' `;
-    console.log(queryString);
-    connection.query(queryString, function (err, rows, fields) {
-         console.log(rows);
-         res.send(rows);
-                })
+// router.get("/user",function(req,res){
+//     console.log(req);
+//     var userid=req.query.id;
+//     var queryString = `SELECT * FROM FCMASTER where FC_CODE='${userid}' `;
+//     console.log(queryString);
+//     connection.query(queryString, function (err, rows, fields) {
+//          console.log(rows);
+//          res.send(rows);
+//                 })
 
-})
+// })
 
 
-router.get("/userspage/", function(req,res){
-    console.log("Username: "+ req.session.username);
-    if(req.session.username){
-    res.render('userspage',{ username: req.session.username ,  fcnum: req.session.FC_CODE });
-    }
-    else{
-        res.redirect('/');
-    }
-});
+
 
 
 router.post("/api/registeruser/", function (req, res) {
- 
+   console.log(req.body);
     
     var name= req.body.name;
-    var birthcountry = req.body.birthcountry;
-    var residencycountry = req.body.residencycountry;
+    var ritwikname=req.body.ritwikname
+   // var birthcountry = req.body.birthcountry;
+    //var residencycountry = req.body.residencycountry;
     var email= req.body.email;
-    var dob= req.body.dob;
+    //var dob= req.body.dob;
     var password= req.body.password;
+    var repassword= req.body.repassword;
+    if(password !== repassword){
+        res.render('login', { err: "Password doesnt match with Confirm Password" });
+        return;
+    }
 
-    var query= `INSERT INTO FCMASTER (HEADPERSON_NAME, HEADPERSON_DOB, NUM_OF_MEMBERS, EMAIL, PASSWORD) VALUES ('${name}', '${dob}', 1, '${email}', '${password}')`;
+    var query= `INSERT INTO FCMASTER (HEADPERSON_NAME, RITWIKNAME, NUM_OF_MEMBERS, EMAIL, PASSWORD) VALUES ('${name}', '${ritwikname}', 1, '${email}', '${password}')`;
 
    
   // console.log(query);
@@ -108,7 +110,7 @@ router.post("/api/registeruser/", function (req, res) {
             var username= name;
             var FC_CODE=result.insertId;
             console.log(username+","+FC_CODE);
-            var query2=`INSERT INTO DEVOTEEMASTER  VALUES (${FC_CODE},'${name}','${dob}', '${birthcountry}', '${residencycountry}','passport', '${email}', '8')`;
+            var query2=`INSERT INTO DEVOTEEMASTER  VALUES (${FC_CODE},'${name}','${ritwikname}')`;
             //console.log(query2);
             connection.query(query2, function (err2, result2, fields2) {
                 if(err2){
@@ -121,7 +123,8 @@ router.post("/api/registeruser/", function (req, res) {
                  req.session.FC_CODE=FC_CODE;
                  req.session.username=username;
                  console.log("FC_CODE after:"+ req.session.FC_CODE);
-                 res.redirect('/userspage');
+                 res.redirect('/api/members');
+                 //res.redirect('/userspage');
                 }});
            
         }

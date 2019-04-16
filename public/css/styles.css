@@ -1,0 +1,53 @@
+@media 
+    only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	#istavritytable2 table, #istavritytable2 thead,#istavritytable2 tbody, #istavritytable2 th,#istavritytable2 td,#istavritytable2 tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#istavritytable2 thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+    }
+    
+    #istavritytable2 tr:nth-child(odd) {
+        background: #5B92F2;
+      }
+	
+    #istavritytable2 tr { border: 1px solid #ccc; }
+	
+	#istavritytable2 td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	#istavritytable2 td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	/*
+	Label the data
+	*/
+	#istavritytable2 td:nth-of-type(1):before { content: "Name"; }
+	#istavritytable2 td:nth-of-type(2):before { content: "Ritwik"; }
+	#istavritytable2 td:nth-of-type(3):before { content: "Swastayani"; }
+	#istavritytable2 td:nth-of-type(4):before { content: "Istavrity"; }
+	#istavritytable2 td:nth-of-type(5):before { content: "Pronami"; }
+	#istavritytable2 td:nth-of-type(6):before { content: "Misc"; }
+	#istavritytable2 td:nth-of-type(7):before { content: "Misc_Desc"; }
+	
+}

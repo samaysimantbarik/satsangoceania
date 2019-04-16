@@ -1,5 +1,5 @@
 {
-  "name": "webappdemo",
+  "name": "satsangoceania2",
   "version": "1.0.0",
   "description": "Demo app",
   "main": "index.js",
@@ -9,10 +9,12 @@
   "author": "Samay Barik",
   "license": "ISC",
   "dependencies": {
+    "aws-serverless-express": "^3.3.6",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.6",
     "bootstrap-select-country": "^4.0.0",
+    "claudia": "^5.4.2",
     "connect-redis": "^3.4.1",
     "consolidate": "^0.15.1",
     "datatables.net-editor": "^1.6.5",
@@ -22,8 +24,13 @@
     "mysql2": "^1.6.5",
     "mysql2-promise": "^0.1.4",
     "nodemon": "^1.18.10",
+    "pinjs": "^1.0.3",
     "popper": "^1.0.1",
+    "popup": "0.0.3",
+    "popups": "^1.1.3",
     "pug": "^2.0.3",
+    "serverless": "^1.40.0",
+    "serverless-http": "^1.9.1",
     "stripe": "^6.28.0",
     "swig": "^1.4.2",
     "tabulator-tables": "^4.2.3"

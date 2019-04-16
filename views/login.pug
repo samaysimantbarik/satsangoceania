@@ -8,7 +8,7 @@ head
   script(src='http://code.jquery.com/jquery-3.3.1.min.js', integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=", crossorigin='anonymous')
   link(rel='stylesheet', href='css/styles.min.css')
   link(rel='stylesheet', src='css/style.css')
-  script(src='js/countrypicker.js')
+  //- script(src='js/countrypicker.js')
   script(src='js/jquery.tableedit.min.js')
 div
 div(style='height:100%;width:100%;')
@@ -60,46 +60,30 @@ div(style='height:100%;width:100%;')
                         form(action='/api/registeruser/', method='POST')
                             .form-wrapper
                               br
-                              label(for='orangeForm-name3',style='color:blue;') Family Member Name
+                              label(for='orangeForm-name3',style='color:blue;') Name
                               input.form-control(type='text' ,name='name')
                               i.zmdi.zmdi-account
+                            
+                            .form-wrapper
+                              br
+                              label(for='orangeForm-name3',style='color:blue;') Ritwik Name
+                              input.form-control(type='text',name='ritwikname')
+                              i.zmdi.zmdi-email
                             .form-wrapper
                               br
                               label(for='orangeForm-name3',style='color:blue;') Email Address
-                              input.form-control(type='text')
+                              input.form-control(type='text',name='email')
                               i.zmdi.zmdi-email
-                            .form-wrapper
-                              br
-                              label(for='orangeForm-name3',style='color:blue;') Country of Birth
-                              select.form-control.selectpicker.countrypicker(placeholder='Country of Origin' ,name='birthcountry', data-default='India')
-                              i.zmdi.zmdi-email
-                            .form-wrapper
-                              br
-                              label(for='orangeForm-name3',style='color:blue;') Country of Residency
-                              select.form-control.selectpicker.countrypicker(placeholder='Country of Residency' ,name='residencycountry', data-default='Australia')
-                              i.zmdi.zmdi-email
-                            .form-wrapper
-                              br
-                              label(for='orangeForm-name3',style='color:blue;') Date Of Birth
-                              input#orangeForm-email3.form-control(type='date', placeholder='Date of Birth', name='dob')
-                            .form-wrapper
-                              br
-                              label(for='orangeForm-name3',style='color:blue;') Gender
-                              select.form-control(name='', id='')
-                                option(value='', disabled='', selected='') Gender
-                                option(value='male') Male
-                                option(value='femal') Female
-                                option(value='other') Other
-                              i.zmdi.zmdi-caret-down(style='font-size: 17px')
+      
                             .form-wrapper
                               br
                               label(for='orangeForm-name3',style='color:blue;') Enter Password
-                              input.form-control(type='password', placeholder='Password')
+                              input.form-control(type='password', placeholder='Password' name='password')
                               i.zmdi.zmdi-lock
                             .form-wrapper
                               br
                               label(for='orangeForm-name3',style='color:blue;') Confirm Password
-                              input.form-control(type='password', placeholder='Confirm Password')
+                              input.form-control(type='password', placeholder='Confirm Password', name='repassword')
                               i.zmdi.zmdi-lock
                               br
                             button(style='margin-left: 30%;')
@@ -117,7 +101,8 @@ div(style='height:100%;width:100%;')
           h1.visible(style='margin-top:10px;margin-bottom:0px;margin-left:100px;height:100px;width:800px;background-color:#efe9f2;padding-left:200px;padding-top:5%;color:rgb(16,15,15);') &nbsp; &nbsp; &nbsp; &nbsp;ISTAVRITY PORTAL
         .col
           div(style='padding-left:80%;')
-           h1
-            err: err
+      .row(style="margin-top:2%")
+          p
+             err= err
 script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
 script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js')

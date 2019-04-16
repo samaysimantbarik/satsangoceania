@@ -1,64 +1,28 @@
 doctype html
 head
+ block head
+  //-title Satsang Oceania
   meta(charset='utf-8')
-  meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  title LoginPage
+  meta(name='viewport', content='width=device-width, initial-scale=1')
+  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
+ 
   block scripts
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700')
     link(rel='stylesheet', href='css/headerfooter.css')
     link(rel='stylesheet', href='Header-Blue.css')
-    link(rel='stylesheet', href='css/styles.min.css')
-    link(rel='stylesheet', src='css/style.css')
-    //link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    //-link(rel='stylesheet', href='css/styles.min.css')
+    //-link(rel='stylesheet', src='css/style.css')
+    link(rel='stylesheet', href='css/styles.css')
+    //- link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
     script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
-    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
-    script(src='js/countrypicker.js')
-    script(src='js/actions.js')
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
-    script(src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js")
-    //- script(src='https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css')
-    //- script(src='https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css')
-    link(rel='stylesheet', type='text/css', href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
- 
    
-    link#bootstrap-css(href='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css', rel='stylesheet')
-    //script(src='js/bootstrap.min.js')
-    link#bootstrap-css(href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css', rel='stylesheet')
-    script(src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js')
-
-    script(src='https://code.jquery.com/jquery-3.3.1.js')
-    script(src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
-    script(src='dataTables.editor.min.js')
-    script(src='https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js')
-    script(src='https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js')
+    script(src='js/actions.js')
     
-    script.
-        $(document).ready(function() {
-        var t = $('#restable').DataTable();
-        //$("#btn1").click(function(){
-        $.ajax({
-        type: "GET",
-        url: "/api/members/",
-              }).done(function(data){
-        //  console.log("Response is:"+data.id+"-"+data.name);
-        $.each(data, function(item, obj) {
-        console.log("Response is:"+obj.FC_CODE+"-"+obj.MEMBER_NAME);
-        t.row.add(
-        [ obj.FC_CODE,
-        obj.MEMBER_NAME,
-        obj.MEMBER_DOB,
-        obj.BIRTH_COUNTRY,
-        obj.RESIDENCY_COUNTRY,
-        obj.PASSPORT_NUMBER,
-        obj.EMAIL,
-        obj.PHONENUMBER
-        ]).draw(false);
-        
-        //});
-        })
-        })
-        });
+    script(src='https://code.jquery.com/jquery-3.3.1.js')
+    
 
 body(style='background-color: #d5d5d5;')
   block headerarea
@@ -68,7 +32,7 @@ body(style='background-color: #d5d5d5;')
             .container
               a.navbar-brand(href='#', style='font-size:32px;')
                 | Satsang Oceania
-                img(src='satsangemblem.jpg', style='width:30%;margin-left:50%;')
+                img(src="images/satsangemblem.jpg", style='width:30%;margin-left:50%;')
               button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
                 span.sr-only Toggle navigation
                 span.navbar-toggler-icon
@@ -103,23 +67,10 @@ div
               i.fa.fa-user.prefix.grey-text
               input#orangeForm-name3.form-control(type='text', name='name')
             .md-form
-              br
-              label(for='orangeForm-name3') Country of Birth
-              select.form-control.selectpicker.countrypicker(name='birthcountry', data-default='India')
-            .md-form
-              br
-              label(for='orangeForm-name3') Country of Residency
-              select.form-control.selectpicker.countrypicker(name='residencycountry', data-default='Australia')
-            .md-form
-              br
-              label(for='orangeForm-email3') Email
-              i.fa.fa-envelope.prefix.grey-text
-              input#orangeForm-email3.form-control(type='email', name='email')
-            .md-form
-              br
-              label(for='orangeForm-email3') Date Of Birth
-              i.fa.fa-envelope.prefix.grey-text
-              input#orangeForm-email3.form-control(type='date', placeholder='Date of Birth', name='dob')
+              label(for='orangeForm-name3') Ritwik Name
+              i.fa.fa-user.prefix.grey-text
+              input#orangeForm-name3.form-control(type='text', name='ritwikname')
+            
             .md-form
               br
               button#addmember.btn.btn-primary(type='submit') Save changes

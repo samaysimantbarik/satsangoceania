@@ -7,6 +7,8 @@ var cons = require('consolidate');
 var redis = require('redis');
 var client = redis.createClient();
 
+const sls= require('serverless-http');
+
 var store = new RedisStore({host: 'localhost', port: 6379, client: client, ttl: 260});
 global.__basedir = __dirname;
 
@@ -34,6 +36,7 @@ const login = require("./services/home");
 const users = require("./services/users");
 const istavrity= require("./services/istavrity");
 const payment= require("./services/payment");
+const argyapraswasti= require("./services/arghyaprasawasti");
 
 
 
@@ -61,18 +64,18 @@ app.use(express.urlencoded())
 app.use("/", login);
 app.use("/api/members/", users);
 app.use("/api/istavrity/", istavrity);
-app.use("/api/payment/", payment);
+app.use("/api/payment", payment);
+app.use("/api/argyhapraswati", argyapraswasti);
 
 
 
 //app.use('/stylesheets', express.static(__dirname , "/assets"));
 console.log(__dirname);
 
-app.get("/api/test/", function (req, res) {
-
-    res.render('index2');
-})
 
 
+//module.exports = app;
+
+//module.exports.server= sls(app);
 
 app.listen(80, () => console.log("Listening"));
