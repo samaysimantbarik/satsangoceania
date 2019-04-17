@@ -4,13 +4,14 @@ block append scripts
     
   script.
        $(document).ready(function() {
+          
            $('#istavritytable2 input:not([readonly])').change(function(){
                console.log("Value Changed");
                 document.getElementById("totalSwastayani").value=getSum(3);
                document.getElementById("totalIstavrity").value=getSum(4);
                document.getElementById("totalPronami").value=getSum(5);
                document.getElementById("totalMiscellenous").value=getSum(6);
-               var calcTotal=getSum(3)+getSum(4)+getSum(5)+getSum(5);
+               var calcTotal=getSum(3)+getSum(4)+getSum(5)+getSum(6);
                document.getElementById("caltotal").value=calcTotal;
                var fees= Math.ceil((calcTotal*0.0175)+0.3);
                document.getElementById("procfees").value=fees;
@@ -73,6 +74,7 @@ block append scripts
             console.log("Value Changed");
  
          });
+         $("#ui-datepicker-div").css("display","none");
          });
 
 
@@ -83,26 +85,24 @@ block content
  
   div
     br
-    
-    br
-    br
-    span(style='font-size:30px;margin-left:40%;margin-top:10px;')
-      strong|Enter Istavrity Details
-    br
+   
+    span(style='font-size:5vw;display:flex;justify-content:center')
+      strong(style='')
+        |Enter Istavrity Details
+   
     br
     h3(style='color:red')
       error= errorMsg
 
-    br
-    br
+   
     //form
     form(action="/api/istavrity/",method='post')
       strong
         |SELECT MONTH-YEAR: 
       input#startDate.date-picker(name="istavrityDate",required)
       br
-      div.table-responsive(style="padding-top:2%;padding-left: 10%;")
-        table#istavritytable2.table-striped
+      div.table-responsive
+        table#istavritytable2.table-striped(style="margin:2%")
             thead.thead-dark
                 tr(style='background-color: #6d7993;')
                   th Name

@@ -8,13 +8,13 @@ head
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
+  link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.7.0/css/all.css', integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ', crossorigin='anonymous')
+
  
   block scripts
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700')
     link(rel='stylesheet', href='css/headerfooter.css')
-    link(rel='stylesheet', href='Header-Blue.css')
-    //-link(rel='stylesheet', href='css/styles.min.css')
-    //-link(rel='stylesheet', src='css/style.css')
+
     link(rel='stylesheet', href='css/styles.css')
     //- link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
     script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
@@ -26,32 +26,47 @@ head
 
 body(style='background-color: #d5d5d5;')
   block headerarea
-      div(style='height:10%;width:100%;')
-        .header-blue(style='height:5%;padding-bottom:0px;')
-          nav.navbar.navbar-dark.navbar-expand-md.navigation-clean-search
-            .container
-              a.navbar-brand(href='#', style='font-size:32px;')
-                | Satsang Oceania
-                img(src="images/satsangemblem.jpg", style='width:30%;margin-left:50%;')
-              button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
-                span.sr-only Toggle navigation
-                span.navbar-toggler-icon
-              #navcol-1.collapse.navbar-collapse
-                ul.nav.navbar-nav
-                a.btn.btn-light.action-button(role='button', href='#', style='margin-left:70%;height:50px;width:100px;') Logout
-      p(style='width:80%;margin-right:10%;margin-left:10%;')
-        span(style='font-size:20px;margin-left:1%;')
-          strong WELCOME &nbsp;:
-          user= username
-        span.float-right.flex-row.justify-content-between.align-self-end.mr-auto(style='font-size:18px;margin-left:0px;')
-          strong FAMILY CODE NUMBER: &nbsp;
-          FCCODE= fcnum
-div
-    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModalLong')
-      | Add Family Members
-    form(action='/api/istavrity', method='GET')
-      button.btn.btn-primary(type='submit')
-                |Pay Istavrity
+
+    div
+      nav.navbar.navbar-light.navbar-expand-md.sticky-top.navigation-clean-button(style='height:80px;background-color:#37434d;color:#ffffff;')
+       
+        .container
+          img(src="/images/icon7.jpg",style="max-height:100%")
+          a.navbar-brand.nav-link.text-white.active.pull-left(href='#')
+           strong 
+            | SatsangOceania
+          button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
+            span.sr-only Toggle navigation
+            span.navbar-toggler-icon
+          #navcol-1.collapse.navbar-collapse
+            ul.nav.navbar-nav.ml-auto
+              li.nav-item(role='presentation')
+                a.nav-link.text-white.active(href='#exampleModalLong',data-toggle='modal', data-target='#exampleModalLong')
+                  i.fas.fa-user-plus(style="padding-right:3px")
+                  | Add Members
+              li.nav-item(role='presentation')
+                  //-  form(action='/api/istavrity', method='GET')
+                  //-    button.btn.btn-primary(type='submit')
+                  //-     |Deposit Istavrity
+                  a.nav-link.text-white.active(href='/api/istavrity', style='color:#ffffff;')
+                   i.fas.fa-hand-holding-usd(style="padding-right:3px")
+                   | Deposit Istavrity
+              li.nav-item(role='presentation')
+                a.nav-link.active(href='/logout', style='color:#ffffff;')
+                  i.fas.fa-sign-out-alt(style="padding-right:3px")
+                  | SignOut
+      div
+        .container
+          .row(style="margin-top:2%;")
+            .col-md-6
+              span(style='font-size:20px;margin-left:1%;')
+                strong WELCOME &nbsp;:
+                user= username
+            .col-md-6
+              span.float-right.flex-row.justify-content-between.align-self-end.mr-auto(style='font-size:18px;margin-left:0px;')
+                strong FAMILY CODE NUMBER: &nbsp;
+                FCCODE= fcnum
+   
 //Modal    
 #exampleModalLong.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLongTitle', aria-hidden='true')
     .modal-dialog(role='document')
@@ -81,44 +96,9 @@ block content
   
 
 block footer
-  .mb-auto.footer-clean(style='display:none;color:rgb(33,37,41);background-color:rgb(24,78,142);position:fixed;width:100%;bottom:0')
+  .mb-auto.footer-clean(style='position:relative;z-index:1;background-color:#37434d;color:#ffffff;;width:100%;')
     footer(style='color:rgb(24,78,142);')
       .container(style='background-color:rgba(33,37,41,0);color:rgb(238,242,247);height:100%;')
         .row.justify-content-center
           .col-sm-4.col-md-3.item
-            h3 Services
-            ul
-              li
-                a(href='#') Web design
-              li
-                a(href='#') Development
-              li
-                a(href='#') Hosting
-          .col-sm-4.col-md-3.item
-            h3 About
-            ul
-              li
-                a(href='#') Company
-              li
-                a(href='#') Team
-              li
-                a(href='#') Legacy
-          .col-sm-4.col-md-3.item
-            h3 Careers
-            ul
-              li
-                a(href='#') Job openings
-              li
-                a(href='#') Employee success
-              li
-                a(href='#') Benefits
-          .col-lg-3.item.social
-            a(href='#')
-              i.icon.ion-social-facebook
-            a(href='#')
-              i.icon.ion-social-twitter
-            a(href='#')
-              i.icon.ion-social-snapchat
-            a(href='#')
-              i.icon.ion-social-instagram
-            p.copyright Company Name &copy; 2017
+            h3 Services              

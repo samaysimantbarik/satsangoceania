@@ -14,18 +14,17 @@ block content
     br
     br
     br
-    //table#restable.stripe.table.table-striped.table-bordered.dt-responsive
-    table#restable2.table.table-responsive.table-bordered.table-striped(style="padding-left:10%")
-          thead
-            tr(style='background-color: #6d7993;')
-              th FC_CODE
-              th NAME
-              th RITWIK
-            
-          tbody
-            each obj in rows
-              tr
-                td= obj.FC_CODE
-                td= obj.MEMBER_NAME
-                td= obj.RITWIKNAME
-                 
+    div.table-responsive
+      table#restable2.table.table-bordered.table-striped(style="padding-left:10%")
+            thead
+              tr(style='background-color: #6d7993;')
+                th FC_CODE
+                th NAME
+                th RITWIK
+              
+            tbody
+              each obj in rows
+                tr
+                  td= obj.FC_CODE
+                  td= obj.MEMBER_NAME
+                  td= obj.RITWIKNAME                 
