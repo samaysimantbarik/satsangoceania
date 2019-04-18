@@ -23,7 +23,7 @@ router.get("/", (req,res)=>{
           console.log(rows);
         //  res.send(result3);
           console.log("Sending...")
-          res.render('istavrityconfirmation', {rows: rows});
+          res.render('istavrityconfirmation', {month:month,year:year,fccode:req.session.FC_CODE,rows: rows});
         }});
    // res.send("Date is:"+date)
 

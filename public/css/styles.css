@@ -15,7 +15,7 @@
     }
     
     #istavritytable2 tr:nth-child(odd) {
-        background: #5B92F2;
+        background: gray;
       }
 	
     #istavritytable2 tr { border: 1px solid #ccc; }

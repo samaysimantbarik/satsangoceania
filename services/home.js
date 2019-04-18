@@ -4,6 +4,9 @@ const router = express.Router();
 const connection = require('../dbconnection/connection');
 const path = require('path');
 router.use(express.static(path.join(global.__basedir, 'public')));
+var nodemailer = require('nodemailer');
+
+
 
 router.get("/api/test/", function (req, res) {
    
@@ -64,17 +67,71 @@ router.post("/api/signin/", function (req, res) {
 
 })
 
-// router.get("/user",function(req,res){
-//     console.log(req);
-//     var userid=req.query.id;
-//     var queryString = `SELECT * FROM FCMASTER where FC_CODE='${userid}' `;
-//     console.log(queryString);
-//     connection.query(queryString, function (err, rows, fields) {
-//          console.log(rows);
-//          res.send(rows);
-//                 })
+router.get("/forgotpassword",function(req,res){
+    console.log(req.query);
+    var email= req.query.username;
+    var fccode= req.query.fccode;
+    console.log("email:"+email);
+    console.log("fccode:"+fccode)
 
-// })
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        auth: {
+          user: 'samay.techm@gmail.com',
+          pass: 'Samta@2505'
+        }
+      });
+
+    if(email.trim() == '' & fccode.trim()==''){
+        res.render('login', { error: "Enter atleast one value(email or family code number) to retrieve your password" });
+    }
+    else{
+
+        var mailOptions = {
+            from: 'donotreply@gmail.com',
+            to: 'samaysimant@gmail.com',
+            subject: 'Sending Email using Node.js',
+            text: 'Account Info',
+            html: '<h1>That was easy123!</h1><p><h3>Welcome</h3></p>'
+          };
+          
+        
+
+            if(email.length>0){
+              //  res.send("Email is:"+email);
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                    }
+                  });
+            }else{
+               if(fccode.length>0){
+               //   res.send("fccode is:"+fccode);
+                  transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                    }
+                  });
+                 }
+                }
+            }
+
+            res.render('login', { error: "Your Password Details have been emailed to your mail id" });
+    // console.log(req);
+    // var userid=req.query.id;
+    // var queryString = `SELECT * FROM FCMASTER where FC_CODE='${userid}' `;
+    // console.log(queryString);
+    // connection.query(queryString, function (err, rows, fields) {
+    //      console.log(rows);
+    //      res.send(rows);
+    //             })
+
+})
 
 
 

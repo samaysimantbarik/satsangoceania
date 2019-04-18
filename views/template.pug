@@ -24,7 +24,7 @@ head
     script(src='https://code.jquery.com/jquery-3.3.1.js')
     
 
-body(style='background-color: #d5d5d5;')
+body(style='background-color: white;')
   block headerarea
 
     div
@@ -63,7 +63,7 @@ body(style='background-color: #d5d5d5;')
                 strong WELCOME &nbsp;:
                 user= username
             .col-md-6
-              span.float-right.flex-row.justify-content-between.align-self-end.mr-auto(style='font-size:18px;margin-left:0px;')
+              span(style='font-size:18px;margin-left:0px;')
                 strong FAMILY CODE NUMBER: &nbsp;
                 FCCODE= fcnum
    
@@ -96,9 +96,9 @@ block content
   
 
 block footer
-  .mb-auto.footer-clean(style='position:relative;z-index:1;background-color:#37434d;color:#ffffff;;width:100%;')
+  .mb-auto.footer-clean(style='position:fixed;bottom:0;background-color:#37434d;color:#ffffff;;width:100%;')
     footer(style='color:rgb(24,78,142);')
       .container(style='background-color:rgba(33,37,41,0);color:rgb(238,242,247);height:100%;')
         .row.justify-content-center
           .col-sm-4.col-md-3.item
-            h3 Services              
+            h4 Contact Us               

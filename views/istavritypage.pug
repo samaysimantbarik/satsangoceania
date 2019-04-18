@@ -86,7 +86,7 @@ block content
   div
     br
    
-    span(style='font-size:5vw;display:flex;justify-content:center')
+    span(style='font-size:4vw;display:flex;justify-content:center')
       strong(style='')
         |Enter Istavrity Details
    
@@ -101,8 +101,8 @@ block content
         |SELECT MONTH-YEAR: 
       input#startDate.date-picker(name="istavrityDate",required)
       br
-      div.table-responsive
-        table#istavritytable2.table-striped(style="margin:2%")
+      div.table.table-responsive(style="margin-top:1%")
+        table#istavritytable2.table-striped(style="margin:auto")
             thead.thead-dark
                 tr(style='background-color: #6d7993;')
                   th Name
@@ -160,7 +160,7 @@ block content
             td  FINAL TOTAL: 
             td 
               input#total(name='finaltotal',readonly="true")
-       button#calculateTotal2.btn.btn-success(type="submit",style=("margin: inherit;"))|Proceed To Payment
+       button#calculateTotal2.btn.btn-success(type="submit",style=("margin-left: 15%;margin-bottom: 10%;"))|Proceed To Payment
         br
       
      

@@ -16,6 +16,7 @@ head
         $(document).ready(function() {
              $("#loginform").hide();
              $("#registration-form").hide();
+             $("#forgotpass").hide();
              $("#btnRegistration").css({"background-color":"gray","color":"white"});
              $("#btnlogin").css({"background-color":"gray","color":"white"});
 
@@ -34,6 +35,17 @@ head
                  }
                  
                   $("#registration-form").hide();
+                   $("#forgotpass").hide();
+                 // $("#coverpic").hide();
+                  
+
+               })
+
+                $("#forgotpasswordlink").click(function(){
+                
+                 $("#forgotpass").show();
+                  $("#registration-form").hide();
+                   $("#loginform").hide();
                  // $("#coverpic").hide();
                   
 
@@ -51,6 +63,7 @@ head
                   // #loginform
                  }
                   $("#loginform").hide();
+                   $("#forgotpass").hide();
                  
                  // $("#coverpic").hide();
                  
@@ -92,15 +105,34 @@ head
                   form(action='/api/signin/', method='POST')
                     .form-group
                       label(for='email') Email:
-                      input#email.form-control(type='email', placeholder='Enter email', name='username')
+                      input#email.form-control(type='email', placeholder='Enter email', name='username',required)
                     .form-group
                       label(for='pwd') Password:
-                      input#pwd.form-control(type='password', placeholder='Enter password', name='pwd')
-                    .checkbox
-                      label
-                        input(type='checkbox', name='remember')
-                        |  Remember me
-                      button.btn.btn-default(type='submit') Login
+                      input#pwd.form-control(type='password', placeholder='Enter password', name='pwd',required)
+                    .form-group
+                      a#forgotpasswordlink(href="#", name='forgotpass')
+                        h5|  Forgot Password
+                    .form-group
+                      button.btn.btn-success(type='submit') Login
+          div.card#forgotpass(style="border:5px solid black")
+            div.card-header(style="display:flex;justify-content:center")
+               strong
+                u
+                  h3|FORGOT PASSWORD
+            div.card-body
+                    span(style='display:flex;justify-content:center')
+                     strong| ENTER ANY ONE OF BELOW
+                    form(action='/forgotpassword', method='get')
+                      .form-group
+                        label(for='emailfp') Enter your email:
+                        input#emailfp.form-control(type='email', placeholder='Enter email', name='username')
+                      .form-group
+                        label(for='fccodefp') Enter Family Code:
+                        input#fccodefp.form-control(type='text', placeholder='Enter Family Code Number', name='fccode')
+                     
+                      .form-group
+                        button.btn.btn-success(type='submit') SUBMIT
+                     
           div.card#registration-form(style="border:5px solid black")
               div.card-header(style="display:flex;justify-content:center")
                strong
@@ -137,19 +169,23 @@ head
                         input.form-control(type='password', placeholder='Confirm Password', name='repassword')
                         i.zmdi.zmdi-lock
                         br
-                      button(style='margin-left: 30%;')
+                      button.btn-success(style='margin-left: 30%;')
                         |Register
                         i.zmdi.zmdi-arrow-right 
+                      p
+                        error= error
+  div#error
+         p
+          h3(style="color:red;text-align:center")
+            error= error                      
   div.jumbotron#coverpic
-      //-.flex-wrap.hero(style='padding-bottom:50%;margin-bottom:0;width:80%;margin-top:0;height:100%;padding-left:0px;')
       .row
         .col
           img.responsive(src='images/thakurcoverpic.jpg', style='height:auto;width:100%;')
           //-h1.visible(style='margin-top:10px;margin-bottom:0px;margin-left:100px;height:100px;width:800px;background-color:#efe9f2;padding-left:200px;padding-top:5%;color:rgb(16,15,15);') &nbsp; &nbsp; &nbsp; &nbsp;ISTAVRITY PORTAL
         
-      .row(style="margin-top:2%")
-          p
-             err= err
+      
+          
       h3(style="text-align:center;background-color:gray;color:white;padding-top:1%;padding-bottom:1%")
               
                |ISTAVRITY PORTAL
