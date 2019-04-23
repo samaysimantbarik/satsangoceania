@@ -28,33 +28,34 @@ body(style='background-color: white;')
   block headerarea
 
     div
-      nav.navbar.navbar-light.navbar-expand-md.sticky-top.navigation-clean-button(style='height:80px;background-color:#37434d;color:#ffffff;')
-       
+      nav.navbar.navbar-default.navigation-clean-button(style='font-weight:bold;background-color:rgb(8,8,8);color:rgba(202,228,228,0.97);/*padding-right:20%;*/')
         .container
-          img(src="/images/icon7.jpg",style="max-height:100%")
-          a.navbar-brand.nav-link.text-white.active.pull-left(href='#')
-           strong 
-            | SatsangOceania
-          button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
-            span.sr-only Toggle navigation
-            span.navbar-toggler-icon
-          #navcol-1.collapse.navbar-collapse
+          .navbar-header
+            a.navbar-brand.navbar-link(href='#')  
+            button.navbar-toggle(data-toggle='collapse', data-target='#navcol-1', aria-expanded='true')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+          #navcol-1.navbar-collapse.collapse.in(aria-expanded='true', style='')
             ul.nav.navbar-nav.ml-auto
               li.nav-item(role='presentation')
-                a.nav-link.text-white.active(href='#exampleModalLong',data-toggle='modal', data-target='#exampleModalLong')
-                  i.fas.fa-user-plus(style="padding-right:3px")
+                a.nav-link.text-white.active(href='/api/members')
+                  i.fas.fa-home(style='padding-right:3px')
+                  | HOME
+              li.nav-item(role='presentation')
+                a.nav-link.text-white.active(href='#exampleModalLong', data-toggle='modal', data-target='#exampleModalLong')
+                  i.fas.fa-user-plus(style='padding-right:3px')
                   | Add Members
               li.nav-item(role='presentation')
-                  //-  form(action='/api/istavrity', method='GET')
-                  //-    button.btn.btn-primary(type='submit')
-                  //-     |Deposit Istavrity
-                  a.nav-link.text-white.active(href='/api/istavrity', style='color:#ffffff;')
-                   i.fas.fa-hand-holding-usd(style="padding-right:3px")
-                   | Deposit Istavrity
+                a.nav-link.text-white.active(href='/api/istavrity', style='color:#ffffff;')
+                  i.fas.fa-hand-holding-usd(style='padding-right:3px')
+                  | Deposit Istavrity
               li.nav-item(role='presentation')
                 a.nav-link.active(href='/logout', style='color:#ffffff;')
-                  i.fas.fa-sign-out-alt(style="padding-right:3px")
+                  i.fas.fa-sign-out-alt(style='padding-right:3px')
                   | SignOut
+
       div
         .container
           .row(style="margin-top:2%;")

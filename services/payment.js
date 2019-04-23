@@ -3,16 +3,18 @@ const keySecret = process.env.SECRET_KEY;
 const connection = require('../dbconnection/connection');
 const express = require("express");
 var router = express.Router();
-const stripe = require("stripe")(keySecret);
+
 var Pin = require('pinjs');
 var request = require('request');
+var config= require('config');
 
 
 
 
 router.get("/", (req, res) => {
   console.log(req);
-  keyPublishable = "pk_bHxGiU8kge6A6CdMUkJ_0A";
+ // keyPublishable = "pk_bHxGiU8kge6A6CdMUkJ_0A";
+ keyPublishable= config.get("payment.keypublishable");
   console.log(keyPublishable);
   res.render("paymentpage.pug", { keyPublishable })
  
@@ -24,7 +26,8 @@ router.get("/", (req, res) => {
 router.post("/charge", (req, res) => {
 
 
-  var key = "XdICJCocfCKbmPnpvVm_2w";
+  //var key = "XdICJCocfCKbmPnpvVm_2w";
+  key= config.get("payment.secretkey");
   var cardToken = req.body.card_token;
 
   var token = Buffer.from(key).toString('base64');
@@ -32,12 +35,12 @@ router.post("/charge", (req, res) => {
   var formdata = {
     'amount': req.session.istavrityobject.finaltotal * 100
     , "currency": "AUD"
-    , "description": "test charge from api"
-    , "email": "samay123@email.com"
+    , "description": `Istavrity for Family Code: ${req.session.FC_CODE} and Period: ${req.session.istavrityobject.istavrityDate}`
+    , "email": req.session.email
     , "card_token": `${cardToken}`
   }
   var clientServerOptions = {
-    uri: 'https://test-api.pinpayments.com/1/charges',
+    uri: config.get("payment.url"),
     form: formdata,
     method: 'POST',
     headers: {

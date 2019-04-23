@@ -1,0 +1,20 @@
+{
+ "db":{
+    "host": "remotemysql.com",
+    "user": "8W47r6rNlr",
+    "password": "uSy9KeIEgW",
+    "database": "8W47r6rNlr"
+      },
+   "payment":{
+       "url":"https://test-api.pinpayments.com/1/charges",
+       "keypublishable":"pk_bHxGiU8kge6A6CdMUkJ_0A",
+       "secretkey":"XdICJCocfCKbmPnpvVm_2w",
+       "email":"samay.techm@gamil.com"
+   }   ,
+   "email":{
+      "username":"satsangoceania@gmail.com"
+      ,"password":"bandepurusotammam"
+   }
+
+
+}
