@@ -22,6 +22,8 @@ head
 
 
                $("#btnlogin").click(function(){
+                    $("#error").hide();
+                    $("#message").hide();
                  if($("#loginform").is(":visible")){
                     $("#loginform").hide();
                     $("#btnlogin").css({"background-color":"gray","color":"white"});
@@ -52,6 +54,8 @@ head
                })
 
                $("#btnRegistration").click(function(){
+                    $("#error").hide();
+                    $("#message").hide();
                  if($("#registration-form").is(":visible")){
                     $("#registration-form").hide();
                     $("#btnRegistration").css({"background-color":"gray","color":"white"});
@@ -174,10 +178,16 @@ head
                         i.zmdi.zmdi-arrow-right 
                       p
                         error= error
+                        message=message
   div#error
          p
           h3(style="color:red;text-align:center")
-            error= error                      
+            error= error    
+            errorRegister=errorRegister
+  div#message
+         p
+          h3(style="color:blue;text-align:center")
+             message=message                    
   div.jumbotron#coverpic
       .row
         .col

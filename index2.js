@@ -1,34 +1,33 @@
 //import { DATETIME } from "mysql2/lib/constants/types";
 
+try{
+add(3,function(err,info){
+ 
+ if(err){
+   console.log("errorrrrr:"+err.message);
+ }else{
+   console.log("info::"+info);
+ }
 
-console.log("Hello");
-a();
-b();
-
-
-
- async function a(){
-    console.log("Function 1 starts"+ Date());
-  
-  
-     await sleep(3);
-   // console.log(response);
-    
-    console.log("Function 1 end" + Date());
+});
+}
+catch(e){
+  console.log(e.message);
 }
 
- async function b(){
-    console.log("Function 2 starts"+ Date());
-  
-  
-     sleep(3);
-   // console.log(response);
-    
-    console.log("Function 2 end" + Date());
-}
 
-function sleep(seconds) 
-{
-  var e = new Date().getTime() + (seconds * 1000);
-  while (new Date().getTime() <= e) {}
+function add(a,b,next){
+  try{
+    if(b===0){
+      next(new Error("error as denominator is 0"))
+    }
+    else{
+     var res=a/b;
+      next("",res);
+         }
+    }
+  catch(e){
+ //  next(new Error(e.message));
+    throw Error("One or more params are missing");
+  }
 }

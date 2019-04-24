@@ -4,8 +4,9 @@ const router = express.Router();
 const connection = require('../dbconnection/connection');
 const path = require('path');
 router.use(express.static(path.join(global.__basedir, 'public')));
-var nodemailer = require('nodemailer');
+
 const config= require('config');
+const emailer=require("../mailer/email");
 
 
 
@@ -16,8 +17,9 @@ router.get("/api/test/", function (req, res) {
 
 
 router.get("/", function (req, res) {
+     var message=req.query.message;
   
-    res.render('login');
+    res.render('login', { message: message });
 
 
 
@@ -58,7 +60,7 @@ router.post("/api/signin/", function (req, res) {
                 req.session.username=result[0].HEADPERSON_NAME
                 console.log("FC_CODE after:"+ req.session.FC_CODE);
                 res.redirect('/api/members');
-               // res.render('userspage', { username: username ,  fcnum: result[0].FC_CODE });
+            
             }
         }
 
@@ -76,29 +78,12 @@ router.get("/forgotpassword",function(req,res){
     console.log("email:"+email);
     console.log("fccode:"+fccode)
 
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        host: 'smtp.gmail.com',
-        auth: {
-          user: config.get("email.username"),
-          pass: config.get("email.password")
-        }
-      });
+
 
     if(email.trim() == '' & fccode.trim()==''){
         res.render('login', { error: "Enter atleast one value(email or family code number) to retrieve your password" });
     }
     else{
-
-        var mailOptions = {
-            from: 'samay.techm@gmail.com',
-            to: email,
-            subject: 'Satsang Oceania: Password Recovery Request',
-            text: 'Account Information',
-            html: '<h1>Please find your account details below</h1><p><h3>Welcome</h3></p>'
-          };
-          
-        
 
             if(email.length>0){
 
@@ -110,22 +95,25 @@ router.get("/forgotpassword",function(req,res){
                         res.render('login', { error: "No entries found for the email specified" });
                     }
                     else{
-                        mailOptions.html=`<h2>Please find your account details below:</h2>
+                        var html=`<h2>Please find your account details below:</h2>
                                          <p><h3>Family Code : ${result[0].FC_CODE}</h3></p>
                                          <p><h3>Name : ${result[0].HEADPERSON_NAME}</h3></p>
                                          <p><h3>Password : ${result[0].PASSWORD}</h3></p>`
-                        transporter.sendMail(mailOptions, function(error, info){
+                        emailer(email,`Satsang Oceania: Password Recovery Request-New`,html, function(error, info){
                         if (error) {
                             console.log(error);
                         } else {
                             console.log('Email sent: ' + info.response);
-                            res.render('login', { error: `Your Password Details has been emailed to your mail id: ${email}`});
+                       
+                            res.redirect(`/?message=Your Password Details has been emailed to your mail id: ${email}`);
                         }
                            })
 
+                      
+
                           }
 
-              //  res.send("Email is:"+email);
+        
                
                   });
             }else{
@@ -138,38 +126,31 @@ router.get("/forgotpassword",function(req,res){
                         res.render('login', { error: "No entries found for the Family Code specified. Try using email id recovery option" });
                     }
                     else{
-                        mailOptions.to=result[0].EMAIL;
-                        mailOptions.html=`<h2>Please find your account details below:</h2>
+                        email=result[0].EMAIL;
+                        html=`<h2>Please find your account details below:</h2>
                                          <p><h3>Family Code : ${result[0].FC_CODE}</h3></p>
                                          <p><h3>Name : ${result[0].HEADPERSON_NAME}</h3></p>
                                          <p><h3>Password : ${result[0].PASSWORD}</h3></p>`
-                        transporter.sendMail(mailOptions, function(error, info){
+                        emailer(email,`Satsang Oceania: Password Recovery Request-New`,html, function(error, info){
                         if (error) {
                             console.log(error);
                         } else {
                             console.log('Email sent: ' + info.response);
-                            res.render('login', { error: `Your Password Details has been emailed to your mail id: ${result[0].EMAIL}`});
+                            //res.render('login', { error: `Your Password Details has been emailed to your mail id: ${result[0].EMAIL}`});
+                            res.redirect(`/?message=Your Password Details has been emailed to your mail id: ${email}`);
                         }
                            })
 
                           }
 
-              //  res.send("Email is:"+email);
+           
                
                   });
                  }
                 }
             }
 
-         //   res.render('login', { error: "Your Password Details have been emailed to your mail id" });
-    // console.log(req);
-    // var userid=req.query.id;
-    // var queryString = `SELECT * FROM FCMASTER where FC_CODE='${userid}' `;
-    // console.log(queryString);
-    // connection.query(queryString, function (err, rows, fields) {
-    //      console.log(rows);
-    //      res.send(rows);
-    //             })
+
 
 })
 
@@ -182,14 +163,13 @@ router.post("/api/registeruser/", function (req, res) {
     
     var name= req.body.name;
     var ritwikname=req.body.ritwikname
-   // var birthcountry = req.body.birthcountry;
-    //var residencycountry = req.body.residencycountry;
+   
     var email= req.body.email;
-    //var dob= req.body.dob;
+    
     var password= req.body.password;
     var repassword= req.body.repassword;
     if(password !== repassword){
-        res.render('login', { err: "Password doesnt match with Confirm Password" });
+        res.render('login', { error: "Password doesnt match with Confirm Password" });
         return;
     }
 
@@ -200,7 +180,17 @@ router.post("/api/registeruser/", function (req, res) {
     connection.query(query, function (err, result, fields) {
         if(err){
             console.log(err);
-            res.render('login', { errorRegister: err });
+            console.log(typeof(err.sqlMessage))
+            var sqlmessage=err.sqlMessage;
+            console.log("sqlmessage:"+sqlmessage)
+            console.log("index:"+sqlmessage.indexOf("Duplicate entry"));
+            if(err.sqlMessage.indexOf('Duplicate entry')!= -1){
+                errmsg=`Email Id: ${email} has already been used. Try a new email id to register` ; 
+              }
+              else{
+                  errmsg=err; 
+              }
+            res.render('login', { errorRegister: errmsg });
         }
         else{
             //console.log(result);
@@ -212,6 +202,7 @@ router.post("/api/registeruser/", function (req, res) {
             connection.query(query2, function (err2, result2, fields2) {
                 if(err2){
                     console.log(err2);
+                   
                     res.render('login', { errorRegister: err2 });
                 }
                 else{
@@ -222,27 +213,14 @@ router.post("/api/registeruser/", function (req, res) {
                  req.session.email=email;
                  console.log("FC_CODE after:"+ req.session.FC_CODE);
 
-                 var transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    host: 'smtp.gmail.com',
-                    auth: {
-                        user: config.get("email.username"),
-                        pass: config.get("email.password")
-                    }
-                  });
-                  var mailOptions = {
-                    from: 'samay.techm@gmail.com',
-                    to: email,
-                    subject: 'Satsang Oceania: Account Creation',
-                    text: 'Account Information',
-                    html: `<h1>Welcome to Satsang Oceania</h1>
+                   var html= `<h1>Welcome to Satsang Oceania</h1>
                             <br>
                            <h2>Please find your account details below:</h2>
                             <p><h3>Family Code : ${FC_CODE}</h3></p>
                             <p><h3>Name : ${name}</h3></p>
                             <p><h3>Password : ${password}</h3></p>`
-                            };
-                    transporter.sendMail(mailOptions, function(error, info){
+                           
+                    emailer(email,'Satsang Oceania: Account Creation',html, function(error, info){
                         if (error) {
                             console.log(error);
                         } else {
@@ -253,7 +231,7 @@ router.post("/api/registeruser/", function (req, res) {
 
 
                  res.redirect('/api/members');
-                 //res.redirect('/userspage');
+                
                 }});
            
         }
@@ -261,7 +239,7 @@ router.post("/api/registeruser/", function (req, res) {
     });
 
 
-    //res.sendFile(__dirname + "/views/register.html");
+   
 });
 
 

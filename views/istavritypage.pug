@@ -13,9 +13,9 @@ block append scripts
                document.getElementById("totalMiscellenous").value=getSum(6);
                var calcTotal=getSum(3)+getSum(4)+getSum(5)+getSum(6);
                document.getElementById("caltotal").value=calcTotal;
-               var fees= Math.ceil((calcTotal*0.0175)+0.3);
+               var fees= (((calcTotal+0.3)/0.982-calcTotal).toFixed(2));
                document.getElementById("procfees").value=fees;
-               var totalfees=Math.ceil(calcTotal+fees);
+               var totalfees=(parseFloat(calcTotal)+parseFloat(fees));
                document.getElementById("total").value=totalfees;
               });
     

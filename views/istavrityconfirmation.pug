@@ -10,21 +10,56 @@ block append scripts
     script(src="http://html2canvas.hertzen.com/dist/html2canvas.min.js")
     script.
         $(document).ready(function() {
+                  console.log("getSum(3):"+getSum(3));
+                  var calcTotal=getSum(3)+getSum(4)+getSum(5)+getSum(6);
+                   document.getElementById("totalvalue").value=calcTotal;
 
                 function print() {
                     const filename  = 'Argya-Praswasti.pdf';
                     html2canvas(document.querySelector('#content')).then(canvas => {
                 //let pdf = new jsPDF('p', 'mm', 'a4');
                  let pdf = new jsPDF("l", "mm", "a3");
-                pdf.addImage(canvas.toDataURL('image/png',1.0), 'PNG', 20, 50, 0, 0);
+                 var width = pdf.internal.pageSize.getWidth();
+                var height = pdf.internal.pageSize.getHeight();
+                pdf.addImage(canvas.toDataURL('image/png',1.0), 'PNG', 0, 50, 0, 0);
+                console.log(canvas.toDataURL('image/png',1.0));
+                 //pdf.addImage(canvas.toDataURL('image/png',1.0), 'PNG');
                 pdf.save(filename);
                 });}
                 
                  $('#cmd').click(function(){
                        print();
                   })
+
+            
              
             });
+    script.
+         function getSum(col){
+           
+            var sum=0;
+               $("tr").each(function(rowindex) {
+                    $(this).find("td:nth-child(" + col + ")").each(function(rowindex) {
+                        newval = $(this).html();
+                      
+                        if (isNaN(newval)) {
+                            
+                        sum += 0;
+                         
+                        } else {
+                        
+                          if(newval==''){
+                              newval=0;
+                          }
+                        sum += parseInt(newval);
+                       
+                        }
+                    });
+                   
+                    });
+                    
+                    return sum;
+                       }
 
 
 block content
@@ -85,7 +120,8 @@ block content
                                     td= obj.MISC_DESC
                 .row
                 .col(style='width:100%;')
-                label.col-form-label Total: &nbsp; XXXXXXXXXXX
+                label.col-form-label Total:
+                input#totalvalue(style="border:0px;text-align:center",readonly)
             #editor
             button#cmd(style="margin-bottom:20%")
              | DOWNLOAD

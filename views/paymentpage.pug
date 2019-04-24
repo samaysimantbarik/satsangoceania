@@ -1,6 +1,8 @@
-doctype html
-meta(name='viewport', content='width=device-width, initial-scale=1.0')
-head
+
+extends template
+
+
+block append scripts
       link(rel='stylesheet', href='css/bootstrap.min.css')
       link(rel='stylesheet', href='css/fonts/font-awesome.min.css')
       link(rel='stylesheet', href='css/Bootstrap-Payment-Form.css')
@@ -12,6 +14,7 @@ head
 
       script.
         $(document).ready(function() {
+              $("#welcomearea").hide();
               $("#keyPublishable").hide();
               console.log("Inside function");
               var keyPublishable = $("#keyPublishable").val();
@@ -95,11 +98,11 @@ head
             };
             });
 
-body
+block content
     header(style='width:100%;')
-      .row(style='width:100%;background-color:#86a7d9;margin-right:0px;margin-left:0px;')
+      .row(style='width:100%;margin-right:0px;margin-left:0px;')
         .col(style='width:100%;')
-          span.d-inline-block.justify-content-center.align-items-center.align-content-center(style='margin-left:35%;font-size:36px;')
+          div(style='text-align:center;font-size:30px;')
             strong
               span(style='text-decoration: underline;') Enter Payment Details
     br
@@ -139,7 +142,7 @@ body
                         .input-group
                           input#address-country.form-control(type='tel', required='', value='Australia')
                           .input-group-append
-            .col-md-6
+            .col-md-6(style="margin-bottom:10%")
               .card.credit-card-box
                 .card-header
                   h6.mb-0
