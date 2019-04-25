@@ -77,5 +77,5 @@ console.log(__dirname);
 //module.exports = app;
 
 //module.exports.server= sls(app);
-
-app.listen(80, () => console.log("Listening"));
+app.set('port', process.env.PORT || 3000);
+app.listen(app.get('port'), () => console.log("Listening"));
