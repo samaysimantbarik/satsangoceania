@@ -83,9 +83,10 @@ async function processIstavrity(req,res) {
     var swastayani = requestbody.swastyani[record];
     var istavrity = requestbody.istavrity[record];
     var pronami = requestbody.pronami[record];
+    var ritwiki = requestbody.ritwiki[record];
     var miscellenous = requestbody.misc[record];
     var miscellenousdesc = requestbody.miscdesc[record];
-    var total = parseFloat(swastayani) + parseFloat(istavrity) + parseFloat(pronami) + parseFloat(miscellenous);
+    var total = parseFloat(swastayani) + parseFloat(istavrity) + parseFloat(pronami) +parseFloat(ritwiki)+ parseFloat(miscellenous);
     console.log("Totals:" + total);
     var query4 = `INSERT INTO  ISD VALUES (
               ${req.session.FC_CODE}, 
@@ -96,6 +97,7 @@ async function processIstavrity(req,res) {
               ${swastayani}, 
               ${istavrity},
               ${pronami}, 
+              ${ritwiki}, 
               ${miscellenous}, 
               "${miscellenousdesc}"
               )`;

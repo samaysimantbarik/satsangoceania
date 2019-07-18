@@ -10,8 +10,9 @@ block append scripts
                 document.getElementById("totalSwastayani").value=getSum(3);
                document.getElementById("totalIstavrity").value=getSum(4);
                document.getElementById("totalPronami").value=getSum(5);
-               document.getElementById("totalMiscellenous").value=getSum(6);
-               var calcTotal=getSum(3)+getSum(4)+getSum(5)+getSum(6);
+               document.getElementById("totalRitwiki").value=getSum(6);
+               document.getElementById("totalMiscellenous").value=getSum(7);
+               var calcTotal=getSum(3)+getSum(4)+getSum(5)+getSum(6)+getSum(7);
                document.getElementById("caltotal").value=calcTotal;
                var fees= (((calcTotal+0.3)/0.982-calcTotal).toFixed(2));
                document.getElementById("procfees").value=fees;
@@ -112,6 +113,7 @@ block content
                   th Swastayani
                   th Istavrity
                   th Pronami
+                  th Rotwiki
                   th Miscellenous
                   th Miscellenous_Desc
             tbody
@@ -129,6 +131,8 @@ block content
                     td
                       input(type="number",min="0",value=0,name="pronami",id="pronami${index}",required)
                     td
+                      input(type="number",min="0",value=0,name="ritwiki",id="ritwiki${index}",required)
+                    td
                       input(type="number",min="0",value=0,name="misc",id="misc${index}",required)
                     td  
                       input(type="text",name="miscdesc" id="miscdesc${index}")
@@ -139,6 +143,7 @@ block content
         input#totalSwastayani(name='totalSwastayani',readonly="true",style=("margin-left:17%;width:10%"))
         input#totalIstavrity(name='totalIstavrity',readonly="true",style=("margin-left:2%;width:10%"))
         input#totalPronami(name='totalPronami',readonly="true",style=("margin-left:2%;width:10%"))
+        input#totalRitwiki(name='totalRitwiki',readonly="true",style=("margin-left:2%;width:10%"))
         input#totalMiscellenous(name='totalMiscellenous',readonly="true",style=("margin-left:2%;width:10%"))
       br
       div(style=("margin-left:20%"))

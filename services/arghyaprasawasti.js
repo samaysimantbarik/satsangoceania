@@ -7,7 +7,7 @@ router.get("/", (req,res)=>{
     var month = date.split(" ")[0];
     var year = date.split(" ")[1];
    // req.session.FC_CODE =162;
-     var query=`SELECT MEMBERNAME,RITWIK,SWASTANI,ISTAVRITY,PRONAMI,MISC_AMT,MISC_DESC
+     var query=`SELECT MEMBERNAME,RITWIK,SWASTANI,ISTAVRITY,PRONAMI,RITWIKI,MISC_AMT,MISC_DESC
      from ISD
      where FCCODE=  ${req.session.FC_CODE}
      and MONTH= "${month}"
