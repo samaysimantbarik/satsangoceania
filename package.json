@@ -22,7 +22,7 @@
     "datatables.net-editor": "^1.6.5",
     "express": "*",
     "express-session": "^1.15.6",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "mysql2": "^1.6.5",
     "mysql2-promise": "^0.1.4",
     "nodemailer": "^6.1.0",
