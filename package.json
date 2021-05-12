@@ -25,7 +25,7 @@
     "jquery": "^3.3.1",
     "mysql2": "^1.6.5",
     "mysql2-promise": "^0.1.4",
-    "nodemailer": "^6.1.0",
+    "nodemailer": "^6.4.16",
     "nodemon": "^1.18.10",
     "pinjs": "^1.0.3",
     "popper": "^1.0.1",
